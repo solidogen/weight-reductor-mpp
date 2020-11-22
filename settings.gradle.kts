@@ -14,3 +14,4 @@ enableFeaturePreview("GRADLE_METADATA")
 
 //include(":")
 include(":common")
+include(":android")
