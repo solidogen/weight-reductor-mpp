@@ -12,6 +12,6 @@ rootProject.name = "weight-reductor-mpp"
 
 enableFeaturePreview("GRADLE_METADATA")
 
-//include(":")
 include(":common")
 include(":android")
+include(":backend")

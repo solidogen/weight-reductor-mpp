@@ -12,7 +12,8 @@ android {
 
 kotlin {
     android()
-
+    jvm()
+    
     sourceSets {
         sourceSets["androidMain"].dependencies {
 
