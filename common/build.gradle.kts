@@ -13,7 +13,12 @@ android {
 kotlin {
     android()
     jvm()
-    
+    js {
+        browser {
+//            binaries.executable()
+        }
+    }
+
     sourceSets {
         sourceSets["androidMain"].dependencies {
 
