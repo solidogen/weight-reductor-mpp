@@ -1,6 +1,6 @@
 package com.spyrdonapps.weightreductor.frontend
 
-import com.spyrdonapps.common.repository.ShoppingListItem
+import com.spyrdonapps.common.model.ShoppingListItem
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch

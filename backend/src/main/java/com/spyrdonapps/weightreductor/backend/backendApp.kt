@@ -1,6 +1,5 @@
 package com.spyrdonapps.weightreductor.backend
 
-import com.spyrdonapps.common.repository.ShoppingListItem
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -9,7 +8,6 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import kotlinx.serialization.Serializable
 
 fun main() {
     embeddedServer(Netty, 9090) {
@@ -33,7 +31,8 @@ fun main() {
     }.start(wait = true)
 }
 
-val shoppingList = mutableListOf(
+// todo remove. this DOESN'T resolve correctly
+private val shoppingList = mutableListOf(
     ShoppingListItem(0, "Cucumbers 🥒", 1),
     ShoppingListItem(1, "Tomatoes 🍅", 2),
     ShoppingListItem(2, "Orange Juice 🍊", 3)

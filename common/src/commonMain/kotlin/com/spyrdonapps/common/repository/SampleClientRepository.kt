@@ -1,15 +1,12 @@
 package com.spyrdonapps.common.repository
 
+import com.spyrdonapps.common.model.ShoppingListItem
 import io.ktor.client.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-
-@Serializable
-data class ShoppingListItem(val id: Int, val name: String, val priority: Int)
 
 class SampleClientRepository {
 
