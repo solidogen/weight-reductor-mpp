@@ -1,11 +1,37 @@
 package com.spyrdonapps.weightreductor.frontend
 
-import react.RProps
+import com.spyrdonapps.common.repository.ShoppingListItem
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import react.*
 import react.dom.h1
-import react.functionalComponent
+import react.dom.li
+import react.dom.ul
 
 val FrontendAppComponent = functionalComponent<RProps> {
+    val appDependencies = useContext(AppDependenciesContext)
+    val repository = appDependencies.repository
+
+    val (list, setList) = useState(emptyList<ShoppingListItem>())
+
+    useEffectWithCleanup(dependencies = listOf()) {
+        val mainScope = MainScope()
+
+        mainScope.launch {
+            setList(repository.fetchHome())
+        }
+        return@useEffectWithCleanup { mainScope.cancel() }
+    }
+
     h1 {
-        +"h1 thing"
+        +"Items from BE:"
+    }
+    ul {
+        list.forEach { item ->
+            li {
+                +"${item.name} (${item.id})"
+            }
+        }
     }
 }

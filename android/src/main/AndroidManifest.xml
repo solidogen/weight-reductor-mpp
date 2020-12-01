@@ -8,6 +8,7 @@
         android:name=".android.WeightReductorAndroidApp"
         android:icon="@android:mipmap/sym_def_app_icon"
         android:theme="@style/Theme.WeightReductor.NoActionBar"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true">
 
         <activity android:name=".android.ui.feature.main.MainActivity">

@@ -16,6 +16,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerialization}") // JVM dependency
     implementation("io.ktor:ktor-websockets:${Versions.ktor}")
 
+    implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.1.1")
+
     implementation(project(":common"))
 }
 
