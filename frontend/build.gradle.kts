@@ -19,7 +19,7 @@ dependencies {
 
 
 kotlin {
-    target {
+    js {
         useCommonJs()
         browser()
         binaries.executable()
