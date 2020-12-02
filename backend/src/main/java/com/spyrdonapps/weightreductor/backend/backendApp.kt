@@ -8,6 +8,7 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import com.spyrdonapps.common.model.ShoppingListItem
 
 fun main() {
     embeddedServer(Netty, 9090) {
