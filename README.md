@@ -4,14 +4,15 @@
 - Frontend React app
 - Backend using ktor
 
-Open with Android Studio 4.2 latest Canary, or better if already available.
+Open with Android Studio Canary
 
-## Issues
-Frontend project may not run using Android Studio Gradle plugin. **Use ./gradlew in Studio's terminal if having problems**
+## Issues (most likely Linux-only)
+Frontend project may not run using AS Gradle plugin. **Use ./gradlew in Studio's terminal if having problems**
+Backend project may look like it has errors in IDE - those are false positives from AS Gradle plugin. **Use ./gradlew in Studio's terminal if having problems**
 
 ## Running
-- Backend  -->   run main function in AS (preferred) or `./gradlew backend:run`
-- Frontend -->   `./gradlew frontend:browserDevelopmentRun` (**use terminal if getting errors with AS Gradle plugin**)
+- Backend  -->   `./gradlew backend:run` (**use terminal if backend code has errors in IDE, this is false positive**)
+- Frontend -->   `./gradlew frontend:browserDevelopmentRun` (**use terminal if task looks frozen with AS Gradle plugin**)
 - Android: -->   AS will detect run configuration, if not, `./gradlew android:installDebug`
 
 ## Killing zombie BE/FE apps
