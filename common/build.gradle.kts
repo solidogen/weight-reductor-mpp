@@ -8,6 +8,14 @@ plugins {
 android {
     compileSdkVersion(AndroidSdk.compile)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdkVersion(AndroidSdk.min)
+        targetSdkVersion(AndroidSdk.target)
+        versionCode = 1
+        versionName = "0.0.1"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
 }
 
 kotlin {
