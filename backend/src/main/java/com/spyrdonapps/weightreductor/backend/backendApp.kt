@@ -32,7 +32,7 @@ fun main() {
     }.start(wait = true)
 }
 
-// todo remove. this DOESN'T resolve correctly
+// this class doesn't resolve correctly in IDE, but it compiles fine within Gradle
 private val shoppingList = mutableListOf(
     ShoppingListItem(0, "Cucumbers 🥒", 1),
     ShoppingListItem(1, "Tomatoes 🍅", 2),
