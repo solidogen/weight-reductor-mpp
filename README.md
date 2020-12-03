@@ -6,9 +6,9 @@
 
 Open with Android Studio Canary
 
-## Issues (most likely Linux-only)
-Frontend project may not run using AS Gradle plugin. **Use ./gradlew in Studio's terminal if having problems**
-Backend project may look like it has errors in IDE - those are false positives from AS Gradle plugin. **Use ./gradlew in Studio's terminal if having problems**
+## Issues
+- Frontend project may not run using AS Gradle plugin. **Use ./gradlew in Studio's terminal if having problems**
+- Backend project may look like it has errors in IDE - those are false positives from AS Gradle plugin. **Use ./gradlew in Studio's terminal if having problems**
 
 ## Running
 - Backend  -->   `./gradlew backend:run` (**use terminal if backend code has errors in IDE, this is false positive**)
@@ -16,7 +16,8 @@ Backend project may look like it has errors in IDE - those are false positives f
 - Android: -->   AS will detect run configuration, if not, `./gradlew android:installDebug`
 
 ## Killing zombie BE/FE apps
-`fuser -n tcp -k 9090`
+- Linux - `fuser -n tcp -k 9090`
+- macOS - `lsof -nti:9090 | xargs kill -9`
 
 9090 is default backend port, 8080 is frontend one
 

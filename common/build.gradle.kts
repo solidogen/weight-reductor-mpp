@@ -26,50 +26,67 @@ kotlin {
         }
     }
 
-    sourceSets {
-        sourceSets["commonMain"].dependencies {
-            // Coroutines
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}") {
-                isForce = true
+    targets.all {
+        compilations.all {
+            kotlinOptions {
+                allWarningsAsErrors = true
             }
-
-            // Ktor
-            implementation(Ktor.clientCore)
-            implementation(Ktor.clientJson)
-            implementation(Ktor.clientLogging)
-            implementation(Ktor.clientSerialization)
-
-            // Kotlinx Serialization
-            implementation(Serialization.core)
-
-            // SQL Delight
-            implementation(SqlDelight.runtime)
-            implementation(SqlDelight.coroutineExtensions)
-
-            // koin
-            api(Koin.core)
-
-            // kermit
-            api(Deps.kermit)
         }
-        sourceSets["commonTest"].dependencies {
+    }
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                // Coroutines
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}") {
+                    isForce = true
+                }
+
+                // Ktor
+                implementation(Ktor.clientCore)
+                implementation(Ktor.clientJson)
+                implementation(Ktor.clientLogging)
+                implementation(Ktor.clientSerialization)
+
+                // Kotlinx Serialization
+                implementation(Serialization.core)
+
+                // SQL Delight
+                implementation(SqlDelight.runtime)
+                implementation(SqlDelight.coroutineExtensions)
+
+                // koin
+                api(Koin.core)
+
+                // kermit
+                api(Deps.kermit)
+            }
         }
-        sourceSets["androidMain"].dependencies {
-            implementation(Ktor.clientAndroid)
-            implementation(SqlDelight.androidDriver)
+        val commonTest by getting {}
+        val androidMain by getting {
+            dependencies {
+                implementation(Ktor.clientAndroid)
+                implementation(SqlDelight.androidDriver)
+            }
         }
-        sourceSets["androidTest"].dependencies {
-            implementation(kotlin("test-junit"))
-            implementation(Test.junit)
+        val androidTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+                implementation(Test.junit)
+            }
         }
-        sourceSets["jvmMain"].dependencies {
-            implementation(Ktor.clientApache)
-            implementation(Ktor.slf4j)
-            implementation(SqlDelight.jdbcDriver)
-            implementation(SqlDelight.sqlliteDriver)
+        val jvmMain by getting {
+            dependencies {
+                implementation(Ktor.clientApache)
+                implementation(Ktor.slf4j)
+                implementation(SqlDelight.jdbcDriver)
+                implementation(SqlDelight.sqlliteDriver)
+            }
         }
-        sourceSets["jsMain"].dependencies {
-            implementation(Ktor.clientJs)
+        val jsMain by getting {
+            dependencies {
+                implementation(Ktor.clientJs)
+            }
         }
     }
 }
