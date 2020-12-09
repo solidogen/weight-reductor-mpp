@@ -1,5 +1,6 @@
 package com.spyrdonapps.weightreductor.backend
 
+import com.spyrdonapps.weightreductor.backend.deletelater.ShoppingListItem
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -8,7 +9,6 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import com.spyrdonapps.common.model.ShoppingListItem
 
 fun main() {
     embeddedServer(Netty, 9090) {
