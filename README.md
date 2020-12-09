@@ -4,7 +4,9 @@
 - Frontend React app
 - Backend using ktor
 
-Open with Android Studio Canary
+Open with Android Studio Canary to develop Android (change JDK from Bundled JDK to JDK 11)
+
+Open with IntelliJ to develop Backend
 
 ## Issues
 - Frontend project may not run using AS Gradle plugin. **Use ./gradlew in Studio's terminal if having problems**
