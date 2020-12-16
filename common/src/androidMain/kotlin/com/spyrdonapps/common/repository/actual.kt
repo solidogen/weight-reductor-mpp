@@ -10,14 +10,14 @@ lateinit var localBackendIp: String
 
 actual fun getLogger(): Logger = LogcatLogger()
 
-actual val localhostDomain = if (isEmulator()) {
+actual val localhostDomain = if (isEmulator) {
     "10.0.2.2"
 } else {
     localBackendIp
 }
 
-private fun isEmulator(): Boolean =
-    Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
+private val isEmulator: Boolean
+    get() = Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
             || Build.FINGERPRINT.startsWith("generic")
             || Build.FINGERPRINT.startsWith("unknown")
             || Build.HARDWARE.contains("goldfish")

@@ -10,6 +10,10 @@ import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
+/**
+ * Not able to use DI or any class in common module here (AGP doesn't work well with multiplatform).
+ * Any common data classes will be temporarily duplicated in [DUPLICATES] file.
+ * */
 fun main() {
     embeddedServer(Netty, 9090) {
         install(ContentNegotiation) {
@@ -32,7 +36,6 @@ fun main() {
     }.start(wait = true)
 }
 
-// this class doesn't resolve correctly in IDE, but it compiles fine within Gradle
 private val shoppingList = mutableListOf(
     ShoppingListItem(0, "Cucumbers 🥒", 1),
     ShoppingListItem(1, "Tomatoes 🍅", 2),

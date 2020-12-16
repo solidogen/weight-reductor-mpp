@@ -8,23 +8,9 @@ import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import kotlinx.serialization.json.Json
 
-class SampleClientRepository {
-
-    private val baseUrl = "http://$localhostDomain:9090/"
-
-    private val nonStrictJson = Json { isLenient = true; ignoreUnknownKeys = true }
-
-    private val client by lazy {
-        HttpClient {
-            install(JsonFeature) {
-                serializer = KotlinxSerializer(nonStrictJson)
-            }
-            install(Logging) {
-                logger = Logger.DEFAULT
-                level = LogLevel.INFO
-            }
-        }
-    }
-
+class SampleClientRepository(
+    private val client: HttpClient,
+    private val baseUrl: String = "http://$localhostDomain:9090/"
+) {
     suspend fun fetchHome() = client.get<List<ShoppingListItem>>(baseUrl)
 }
