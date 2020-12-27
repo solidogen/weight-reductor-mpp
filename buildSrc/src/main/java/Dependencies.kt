@@ -2,17 +2,17 @@
 object Versions {
     const val kotlin = "1.4.21"
     const val kotlinCoroutines = "1.4.2-native-mt"
-    const val ktor = "1.4.1"
-    const val kotlinxSerialization = "1.0.0-RC"
+    const val ktor = "1.5.0"
+    const val kotlinxSerialization = "1.0.1"
     const val koin = "3.0.0-alpha-4"
     const val sqlDelight = "1.4.2"
     const val kermit = "0.1.8"
 
     const val sqliteJdbcDriver = "3.30.1"
     const val slf4j = "1.7.30"
-    const val compose = "1.0.0-alpha08"
-    const val nav_compose = "1.0.0-alpha03"
-    const val accompanist = "0.4.0"
+    const val compose = "1.0.0-alpha09"
+    const val nav_compose = "1.0.0-alpha04"
+    const val accompanist = "0.4.1"
 
     const val junit = "4.13"
     const val testRunner = "1.3.0"
