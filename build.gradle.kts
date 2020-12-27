@@ -23,4 +23,8 @@ allprojects {
     }
 }
 
+// Alias "installDist" as "stage" for Heroku, to prepare jar for Procfile access
+tasks.create("stage") {
+    dependsOn(":backend:installDist")
+}
 

@@ -15,7 +15,7 @@ import io.ktor.server.netty.*
  * Any common data classes will be temporarily duplicated in [DUPLICATES] file.
  * */
 fun main() {
-    embeddedServer(Netty, 9090) {
+    embeddedServer(Netty, System.getenv("PORT")?.toInt() ?: 9090) {
         install(ContentNegotiation) {
             json()
         }
