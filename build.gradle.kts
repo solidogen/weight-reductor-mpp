@@ -21,6 +21,14 @@ allprojects {
         maven(url = "https://kotlin.bintray.com/kotlin-js-wrappers/")
         maven(url = "https://jitpack.io")
     }
+
+    tasks {
+        withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
+    }
 }
 
 // Alias "installDist" as "stage" for Heroku, to prepare jar for Procfile access
