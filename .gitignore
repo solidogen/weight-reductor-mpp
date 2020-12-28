@@ -33,3 +33,6 @@ xcschememanagement.plist
 *.xcbkptlist
 
 **.hprof
+
+# Local Netlify folder
+.netlify

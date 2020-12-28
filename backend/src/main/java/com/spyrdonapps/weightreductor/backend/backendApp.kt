@@ -16,7 +16,6 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.reactivestreams.KMongo
 import kotlin.random.Random
 
-// todo ORMONGO_RS_URL ?
 val connectionString: ConnectionString? = System.getenv("MONGODB_URI")?.let {
     ConnectionString("$it?retryWrites=false&w=majority")
 }

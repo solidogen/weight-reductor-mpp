@@ -34,4 +34,5 @@ val FrontendAppComponent = functionalComponent<RProps> {
             }
         }
     }
+    // todo button to call add new (like fullstack sample)
 }
