@@ -13,7 +13,7 @@ Open with Android Studio Canary to develop Android (change JDK from Bundled JDK 
 
 ## Running
 - Backend  -->   `./gradlew backend:run` (**use terminal if backend code has errors in IDE, this is false positive**)
-- Frontend -->   `./gradlew frontend:run` (**use terminal if task looks frozen with AS Gradle plugin**)
+- Frontend -->   `./gradlew frontend:run --continuous` (**use terminal if task looks frozen with AS Gradle plugin**)
 - Android: -->   AS will detect run configuration, if not, `./gradlew android:installDebug`
 
 ## Killing zombie BE/FE apps

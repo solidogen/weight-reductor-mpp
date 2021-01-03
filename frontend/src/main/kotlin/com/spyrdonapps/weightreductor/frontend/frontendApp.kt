@@ -3,9 +3,10 @@ package com.spyrdonapps.weightreductor.frontend
 import co.touchlab.kermit.Kermit
 import com.spyrdonapps.common.di.initKoin
 import com.spyrdonapps.common.repository.SampleClientRepository
+import com.spyrdonapps.weightreductor.frontend.components.appMainComponent
+import com.spyrdonapps.weightreductor.frontend.utils.normalizeCss
 import org.koin.core.KoinComponent
 import org.koin.core.get
-import react.child
 import react.createContext
 import react.dom.render
 
@@ -17,7 +18,6 @@ object AppDependencies : KoinComponent {
         initKoin()
         repository = get()
         logger = get()
-        logger.d { "initalized appdep" }
     }
 }
 
@@ -25,9 +25,9 @@ val AppDependenciesContext = createContext<AppDependencies>()
 
 fun main() {
     render(kotlinx.browser.document.getElementById("root")) {
+        normalizeCss()
         AppDependenciesContext.Provider(AppDependencies) {
-            child(FrontendAppComponent)
+            appMainComponent {  }
         }
     }
-    AppDependencies.logger.d { "initalized main" }
 }
