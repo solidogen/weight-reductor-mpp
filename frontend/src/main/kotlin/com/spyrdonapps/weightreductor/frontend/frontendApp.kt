@@ -27,7 +27,7 @@ fun main() {
     render(kotlinx.browser.document.getElementById("root")) {
         normalizeCss()
         AppDependenciesContext.Provider(AppDependencies) {
-            appMainComponent {  }
+            appMainComponent { }
         }
     }
 }
