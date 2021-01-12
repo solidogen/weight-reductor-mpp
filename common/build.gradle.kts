@@ -60,6 +60,10 @@ kotlin {
 
                 // Kotlinx Serialization
                 implementation(Serialization.core)
+                implementation(Serialization.json)
+
+                // Kotlinx Datetime
+                implementation(Deps.datetime)
 
                 // SQL Delight
                 implementation(SqlDelight.runtime)

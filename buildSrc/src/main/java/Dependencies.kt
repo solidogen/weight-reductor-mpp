@@ -7,6 +7,7 @@ object Versions {
     const val koin = "3.0.0-alpha-4"
     const val sqlDelight = "1.4.2"
     const val kermit = "0.1.8"
+    const val datetime = "0.1.1"
 
     const val sqliteJdbcDriver = "3.30.1"
     const val slf4j = "1.7.30"
@@ -27,6 +28,7 @@ object AndroidSdk {
 
 object Deps {
     const val kermit = "co.touchlab:kermit:${Versions.kermit}"
+    const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.datetime}"
 }
 
 object Test {
@@ -66,6 +68,7 @@ object Ktor {
 
 object Serialization {
     val core = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerialization}"
+    val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxSerialization}"
 }
 
 object SqlDelight {

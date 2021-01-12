@@ -1,14 +1,15 @@
 package com.spyrdonapps.common.repository
 
-import com.spyrdonapps.common.model.ShoppingListItem
+import com.spyrdonapps.common.model.Weighing
 import io.ktor.client.*
 import io.ktor.client.request.*
 
-class SampleClientRepository(
+class WeighingRepository(
     private val client: HttpClient,
     private val baseUrl: String = "https://dev-wr.herokuapp.com"
 ) {
-    suspend fun fetchHome() = client.get<List<ShoppingListItem>>("$baseUrl/shopping")
+    // todo route to common code from BE
+    suspend fun getAllWeighings() = client.get<List<Weighing>>("$baseUrl/weighing")
 
     // todo post/delete
 }

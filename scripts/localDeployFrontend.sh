@@ -1,3 +1,4 @@
 #!/bin/bash
+cd ..
 ./gradlew frontend:browserDistribution
-netlify deploy --prod
+./gradlew frontend:run --continuous

@@ -1,6 +1,6 @@
 @file:Suppress("EXPERIMENTAL_API_USAGE")
 
-package com.spyrdonapps.weightreductor.backend.deletelater
+package com.spyrdonapps.common.model
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer

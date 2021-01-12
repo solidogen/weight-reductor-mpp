@@ -1,7 +1,8 @@
 package com.spyrdonapps.weightreductor.frontend.components.playground
 
-import com.spyrdonapps.common.model.ShoppingListItem
-import com.spyrdonapps.common.repository.SampleClientRepository
+import co.touchlab.kermit.Kermit
+import com.spyrdonapps.common.model.Weighing
+import com.spyrdonapps.common.repository.WeighingRepository
 import com.spyrdonapps.weightreductor.frontend.AppDependenciesContext
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -10,28 +11,38 @@ import react.*
 import react.dom.h1
 
 external interface BeItemsListState : RState {
-    var list: List<ShoppingListItem>
+    var list: List<Weighing>
+    var isInitialized: Boolean
 }
 
 class BeItemsList : RComponent<RProps, BeItemsListState>() {
 
     override fun BeItemsListState.init() {
         list = emptyList()
+        isInitialized = false
     }
 
     override fun RBuilder.render() {
         // TODO I need to move api call to componentDidMount, but I don't know how to get Context
         //  without RBuilder.
-        var repository: SampleClientRepository? = null
+        var repository: WeighingRepository? = null
+        var logger: Kermit? = null
         AppDependenciesContext.Consumer { dependencies ->
             repository = dependencies.repository
+            logger = dependencies.logger
         }
-        if (state.list.isEmpty()) {
+        if (!state.isInitialized) {
             val mainScope = MainScope()
             mainScope.launch {
-                val items = repository?.fetchHome().orEmpty()
+                val items: List<Weighing> = try {
+                    repository?.getAllWeighings().orEmpty()
+                } catch (e: Exception) {
+                    logger?.e(e) { "Error getting weighings" }
+                    emptyList()
+                }
                 setState {
                     list = items
+                    isInitialized = true
                 }
                 mainScope.cancel()
             }
@@ -41,7 +52,7 @@ class BeItemsList : RComponent<RProps, BeItemsListState>() {
             +"Items from BE:"
         }
         simpleList {
-            list = state.list.map { item -> "${item.name} (${item.id})" }
+            list = state.list.map { item -> "${item.weight} (${item.date})" }
         }
     }
 }

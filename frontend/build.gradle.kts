@@ -6,6 +6,8 @@ plugins {
 dependencies {
     implementation(kotlin("stdlib-js"))
 
+    implementation(Deps.datetime)
+
     implementation("org.jetbrains:kotlin-react:16.13.1-pre.113-kotlin-1.4.0")
     implementation("org.jetbrains:kotlin-react-dom:16.13.1-pre.113-kotlin-1.4.0")
     implementation("org.jetbrains:kotlin-react-router-dom:5.1.2-pre.113-kotlin-1.4.0")

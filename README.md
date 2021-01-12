@@ -6,12 +6,12 @@
 
 Open with Android Studio Canary (change JDK from Bundled JDK to JDK 11)
 
-## Running
+## Running (also see scripts folder in root)
 - Backend  -->   `./gradlew backend:run` (**use terminal if backend code has errors in IDE, this is false positive**)
 - Frontend -->   `./gradlew frontend:run --continuous` (**use terminal if task looks frozen with AS Gradle plugin**)
 - Android: -->   AS will detect run configuration, if not, `./gradlew android:installDebug`
 
-## Killing zombie BE/FE apps
+## Killing zombie BE/FE apps (also see scripts folder in root)
 - Linux - `fuser -n tcp -k 9090`
 - macOS - `lsof -nti:9090 | xargs kill -9`
 

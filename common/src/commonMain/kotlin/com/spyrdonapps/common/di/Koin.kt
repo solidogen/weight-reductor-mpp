@@ -1,7 +1,7 @@
 package com.spyrdonapps.common.di
 
 import co.touchlab.kermit.Kermit
-import com.spyrdonapps.common.repository.SampleClientRepository
+import com.spyrdonapps.common.repository.WeighingRepository
 import com.spyrdonapps.common.repository.getLogger
 import io.ktor.client.*
 import io.ktor.client.features.json.*
@@ -22,7 +22,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
     single { createHttpClient(json = get(), enableNetworkLogs = enableNetworkLogs) }
     single { Kermit(getLogger()) }
-    single { SampleClientRepository(client = get()) }
+    single { WeighingRepository(client = get(), baseUrl = "http://0.0.0.0:9090") }
 }
 
 fun createJson() = Json { isLenient = true; ignoreUnknownKeys = true }
