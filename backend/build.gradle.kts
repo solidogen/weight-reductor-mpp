@@ -24,7 +24,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerialization}") // JVM dependency
     implementation("io.ktor:ktor-websockets:${Versions.ktor}")
 
-    implementation("org.litote.kmongo:kmongo-coroutine:4.2.3")
+    implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.2.3")
 
     testImplementation("org.koin:koin-test:${Versions.koin}")
     testImplementation("io.ktor:ktor-server-test-host:${Versions.ktor}")

@@ -16,7 +16,7 @@ val backendModule = module(createdAtStart = true) {
             ConnectionString("$it?retryWrites=false&w=majority")
         }
         val client = if (connectionString != null) KMongo.createClient(connectionString).coroutine else KMongo.createClient().coroutine
-        val database = client.getDatabase(connectionString?.database ?: "test")
+        val database = client.getDatabase(connectionString?.database ?: "wr-database")
         database
     }
 

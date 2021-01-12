@@ -1,4 +1,3 @@
-
 object Versions {
     const val kotlin = "1.4.21"
     const val kotlinCoroutines = "1.4.2-native-mt"
@@ -8,6 +7,8 @@ object Versions {
     const val sqlDelight = "1.4.2"
     const val kermit = "0.1.8"
     const val datetime = "0.1.1"
+
+    const val lifecycle = "2.2.0"
 
     const val sqliteJdbcDriver = "3.30.1"
     const val slf4j = "1.7.30"
@@ -19,11 +20,16 @@ object Versions {
     const val testRunner = "1.3.0"
 }
 
-
 object AndroidSdk {
-    const val min = 21
+    const val min = 23
     const val compile = 29
     const val target = 29
+}
+
+object ApiUrls {
+    const val localAndroid = "http://10.0.2.2:9090"
+    const val dev = "https://dev-wr.herokuapp.com"
+    const val prod = "https://weightreductor.herokuapp.com"
 }
 
 object Deps {
