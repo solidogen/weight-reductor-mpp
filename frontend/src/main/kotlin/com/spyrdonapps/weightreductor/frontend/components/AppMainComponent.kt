@@ -1,7 +1,6 @@
 package com.spyrdonapps.weightreductor.frontend.components
 
-import com.spyrdonapps.weightreductor.frontend.components.playground.beItemsList
-import com.spyrdonapps.weightreductor.frontend.components.playground.playground
+import com.spyrdonapps.weightreductor.frontend.components.playground.weighingsList
 import react.*
 
 class AppMainComponent : RComponent<RProps, RState>() {
@@ -9,8 +8,8 @@ class AppMainComponent : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
         mainHeader { }
         // todo rest of main layout
-        beItemsList { }
-        playground { }
+        weighingsList { }
+//        playground { }
     }
 }
 

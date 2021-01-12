@@ -11,7 +11,7 @@ import com.spyrdonapps.weightreductor.android.util.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Instant
+import kotlinx.datetime.Clock
 
 class MainViewModel(
     private val sampleClientRepository: WeighingRepository,
@@ -34,7 +34,7 @@ class MainViewModel(
                 sampleClientRepository.postWeighing(
                     Weighing(
                         weight = 13f,
-                        date = Instant.fromEpochMilliseconds(System.currentTimeMillis())
+                        date = Clock.System.now()
                     )
                 )
             } catch (e: Throwable) {

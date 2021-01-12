@@ -27,7 +27,7 @@ fun main() {
         Netty,
         port = System.getenv("PORT")?.toInt() ?: 9090,
         module = Application::appModule,
-        watchPaths = listOf("backend")
+        watchPaths = listOf("backend") // fixme - this doesn't recompile BE
     ).start(wait = true)
 }
 
@@ -35,9 +35,18 @@ fun Application.appModule() {
     install(DefaultHeaders)
     install(ContentNegotiation) { json() }
     install(CORS) {
+        method(HttpMethod.Options)
         method(HttpMethod.Get)
         method(HttpMethod.Post)
+        method(HttpMethod.Put)
         method(HttpMethod.Delete)
+        method(HttpMethod.Patch)
+        header(HttpHeaders.AccessControlAllowHeaders)
+        header(HttpHeaders.Accept)
+        header(HttpHeaders.AcceptLanguage)
+        header(HttpHeaders.ContentType)
+        header(HttpHeaders.AccessControlAllowOrigin)
+        header(HttpHeaders.Authorization)
         anyHost()
     }
     install(Compression) { gzip() }

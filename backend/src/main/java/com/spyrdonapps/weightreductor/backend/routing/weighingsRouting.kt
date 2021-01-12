@@ -37,8 +37,7 @@ fun Route.weighings(repository: WeighingsRepository) {
             call.respond(repository.getByDate(date))
         }
         post {
-//            val weighing = call.receive<Weighing>() TODO
-            val weighing = Weighing(50f, Instant.fromEpochMilliseconds(System.currentTimeMillis()))
+            val weighing = call.receive<Weighing>()
             repository.upsert(weighing)
             call.respond(HttpStatusCode.OK)
         }
