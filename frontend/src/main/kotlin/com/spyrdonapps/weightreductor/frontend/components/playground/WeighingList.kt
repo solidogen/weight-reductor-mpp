@@ -3,6 +3,7 @@ package com.spyrdonapps.weightreductor.frontend.components.playground
 import co.touchlab.kermit.Kermit
 import com.spyrdonapps.common.model.Weighing
 import com.spyrdonapps.common.repository.WeighingRepository
+import com.spyrdonapps.common.util.extensions.getStringWithFormat
 import com.spyrdonapps.weightreductor.frontend.AppDependenciesContext
 import com.spyrdonapps.weightreductor.frontend.resources.CustomColor
 import kotlinx.coroutines.MainScope
@@ -119,7 +120,7 @@ class WeighingList : RComponent<RProps, WeighingListState>() {
             +"Weighings:"
         }
         simpleList {
-            list = state.list.map { item -> "${item.weight} (${item.date})" }
+            list = state.list.map { item -> "${item.weight} (${item.date.getStringWithFormat()})" }
         }
     }
 }
