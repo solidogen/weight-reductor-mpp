@@ -22,8 +22,8 @@ object Versions {
 
 object AndroidSdk {
     const val min = 23
-    const val compile = 29
-    const val target = 29
+    const val compile = 30
+    const val target = 30
 }
 
 object ApiUrls {
