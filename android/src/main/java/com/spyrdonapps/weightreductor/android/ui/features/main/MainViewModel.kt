@@ -24,10 +24,6 @@ class MainViewModel(
     val textStateFlow: StateFlow<List<Weighing>> get() = _textStateFlow
     val errorFlow: LiveData<Event<String>> get() = _errorFlow
 
-    init {
-        getHome()
-    }
-
     fun postWeighing() {
         viewModelScope.launch {
             try {
