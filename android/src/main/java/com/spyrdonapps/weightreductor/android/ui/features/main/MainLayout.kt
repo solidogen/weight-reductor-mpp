@@ -10,7 +10,7 @@ import com.spyrdonapps.weightreductor.android.ui.features.settings.SettingsScree
 import com.spyrdonapps.weightreductor.android.util.Actions
 import com.spyrdonapps.weightreductor.android.util.Destination
 import com.spyrdonapps.weightreductor.android.util.Navigator
-import com.spyrdonapps.weightreductor.android.util.exhaustive
+import com.spyrdonapps.common.util.utils.exhaustive
 
 @Composable
 fun MainLayout(onBackPressedDispatcher: OnBackPressedDispatcher, viewModel: MainViewModel) {
@@ -23,8 +23,8 @@ fun MainLayout(onBackPressedDispatcher: OnBackPressedDispatcher, viewModel: Main
     // todo app theme
     Crossfade(current = navigator.current) { destination ->
         when (destination) {
-            Destination.Home -> HomeScreen(goToSettings = actions.goToSettings)
-            Destination.Settings -> SettingsScreen(upPress = actions.upPress)
+            Destination.Home -> HomeScreen(viewModel = viewModel, goToSettings = actions.goToSettings)
+            Destination.Settings -> SettingsScreen(viewModel = viewModel, upPress = actions.upPress)
         }.exhaustive
     }
 }

@@ -12,14 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.spyrdonapps.weightreductor.R
 import com.spyrdonapps.weightreductor.android.ui.custom.DefaultBottomBar
+import com.spyrdonapps.weightreductor.android.ui.features.main.MainViewModel
 import com.spyrdonapps.weightreductor.android.ui.features.meals.MealsScreen
 import com.spyrdonapps.weightreductor.android.ui.features.products.ProductsScreen
 import com.spyrdonapps.weightreductor.android.ui.features.profile.ProfileScreen
 import com.spyrdonapps.weightreductor.android.ui.features.weighings.WeighingsScreen
-import com.spyrdonapps.weightreductor.android.util.exhaustive
+import com.spyrdonapps.common.util.utils.exhaustive
 
 @Composable
-fun HomeScreen(goToSettings: () -> Unit) {
+fun HomeScreen(viewModel: MainViewModel, goToSettings: () -> Unit) {
     val (currentTab, setCurrentTab) = savedInstanceState { HomeTab.Meals }
     val navItems = HomeTab.values().toList()
     // todo pass theme like in Jetsnack
@@ -35,10 +36,10 @@ fun HomeScreen(goToSettings: () -> Unit) {
         val modifier = Modifier.padding(innerPadding)
         Crossfade(currentTab) { tab ->
             when (tab) {
-                HomeTab.Meals -> MealsScreen(modifier = modifier)
-                HomeTab.Products -> ProductsScreen(modifier)
-                HomeTab.Weighings -> WeighingsScreen(modifier)
-                HomeTab.Profile -> ProfileScreen(modifier)
+                HomeTab.Meals -> MealsScreen(modifier = modifier, viewModel)
+                HomeTab.Products -> ProductsScreen(modifier, viewModel)
+                HomeTab.Weighings -> WeighingsScreen(modifier, viewModel)
+                HomeTab.Profile -> ProfileScreen(modifier, viewModel)
             }.exhaustive
         }
     }
