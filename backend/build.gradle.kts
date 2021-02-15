@@ -24,7 +24,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerialization}") // JVM dependency
     implementation("io.ktor:ktor-websockets:${Versions.ktor}")
 
-    implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.2.3")
+    implementation("org.postgresql:postgresql:${Versions.postgres}")
+    implementation("org.jetbrains.exposed:exposed-core:${Versions.exposed}")
+    implementation("org.jetbrains.exposed:exposed-dao:${Versions.exposed}")
+    implementation("org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}")
 
     testImplementation("org.koin:koin-test:${Versions.koin}")
     testImplementation("io.ktor:ktor-server-test-host:${Versions.ktor}")

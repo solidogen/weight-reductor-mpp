@@ -8,6 +8,9 @@ object Versions {
     const val kermit = "0.1.8"
     const val datetime = "0.1.1"
 
+    const val exposed = "0.29.1"
+    const val postgres = "42.2.2"
+
     const val lifecycle = "2.2.0"
 
     const val sqliteJdbcDriver = "3.30.1"
