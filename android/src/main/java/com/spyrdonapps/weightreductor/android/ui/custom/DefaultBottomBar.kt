@@ -17,7 +17,7 @@ fun DefaultBottomBar(
     BottomNavigation {
         items.forEach { homeTab ->
             BottomNavigationItem(
-                icon = { Icon(homeTab.icon) },
+                icon = { Icon(homeTab.icon, contentDescription = homeTab.name) },
                 label = { Text(stringResource(id = homeTab.titleResId)) },
                 selected = homeTab == currentTab,
                 onClick = { onTabSelected(homeTab) })
