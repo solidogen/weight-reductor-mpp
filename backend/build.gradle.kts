@@ -17,7 +17,7 @@ dependencies {
     implementation("io.ktor:ktor-auth:${Versions.ktor}")
     implementation("io.ktor:ktor-locations:${Versions.ktor}")
 
-    implementation("org.koin:koin-ktor:${Versions.koin}")
+    implementation(Koin.ktor)
 
     implementation("ch.qos.logback:logback-classic:1.2.3")
 
@@ -29,7 +29,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:${Versions.exposed}")
     implementation("org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}")
 
-    testImplementation("org.koin:koin-test:${Versions.koin}")
+    testImplementation(Koin.test)
     testImplementation("io.ktor:ktor-server-test-host:${Versions.ktor}")
 }
 

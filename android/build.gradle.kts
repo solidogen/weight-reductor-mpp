@@ -24,7 +24,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            isShrinkResources = true
+            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -64,9 +64,10 @@ android {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf(
-            "-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check",
-            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check",
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
         )
     }
 }
@@ -74,10 +75,11 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 dependencies {
     implementation(project(":common"))
 
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.1")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("com.google.android.material:material:1.2.1")
+    implementation("androidx.activity:activity-compose:1.3.0-alpha03")
+
+    implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}")
@@ -91,8 +93,9 @@ dependencies {
     implementation(Compose.navigation)
     implementation(Compose.accompanist)
 
+    implementation(Koin.core)
     implementation(Koin.android)
-    implementation(Koin.androidViewModel)
+    implementation(Koin.compose)
 
     implementation(Deps.datetime)
 

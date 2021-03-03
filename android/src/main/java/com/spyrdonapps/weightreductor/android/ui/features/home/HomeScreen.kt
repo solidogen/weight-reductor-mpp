@@ -7,7 +7,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.savedinstancestate.savedInstanceState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.spyrdonapps.weightreductor.R
@@ -21,7 +22,9 @@ import com.spyrdonapps.common.util.utils.exhaustive
 
 @Composable
 fun HomeScreen(viewModel: MainViewModel, goToSettings: () -> Unit) {
-    val (currentTab, setCurrentTab) = savedInstanceState { HomeTab.Meals }
+    val (currentTab, setCurrentTab) = rememberSaveable {
+        mutableStateOf(HomeTab.Meals)
+    }
     val navItems = HomeTab.values().toList()
     // todo pass theme like in Jetsnack
     Scaffold(
