@@ -16,6 +16,7 @@ import io.ktor.server.netty.*
 import org.jetbrains.exposed.sql.Database
 import org.koin.ktor.ext.Koin
 import org.koin.ktor.ext.inject
+import org.koin.logger.SLF4JLogger
 import org.slf4j.event.Level
 
 /**
@@ -54,7 +55,10 @@ fun Application.appModule() {
         level = Level.DEBUG
     }
     install(Locations)
-    install(Koin) { modules(backendModule) }
+    install(Koin) {
+        modules(backendModule)
+        SLF4JLogger()
+    }
     install(StatusPages) {
         exception<Throwable> { cause ->
             log.error("Internal error", cause)
