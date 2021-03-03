@@ -13,23 +13,15 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import org.jetbrains.exposed.sql.Database
 import org.koin.ktor.ext.Koin
 import org.koin.ktor.ext.inject
+import org.koin.logger.SLF4JLogger
 import org.slf4j.event.Level
 
 /**
  * Not able to use DI or any class in common module here (AGP doesn't work well with multiplatform).
  * Any common data classes will be temporarily duplicated in 2 files named [DUPLICATES] in backend module AND common module.
  * */
-fun main() {
-    embeddedServer(
-        Netty,
-        port = System.getenv("PORT")?.toInt() ?: 9090,
-        module = Application::appModule,
-        watchPaths = listOf("backend") // fixme - this doesn't recompile BE
-    ).start(wait = true)
-}
 
 fun Application.appModule() {
     install(DefaultHeaders)
@@ -54,7 +46,10 @@ fun Application.appModule() {
         level = Level.DEBUG
     }
     install(Locations)
-    install(Koin) { modules(backendModule) }
+    install(Koin) {
+        SLF4JLogger()
+        modules(backendModule)
+    }
     install(StatusPages) {
         exception<Throwable> { cause ->
             log.error("Internal error", cause)

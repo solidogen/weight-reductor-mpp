@@ -62,6 +62,7 @@ object Koin {
     val android = "io.insert-koin:koin-android:${Versions.koin}"
     val compose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
     val ktor = "io.insert-koin:koin-ktor:${Versions.koin}"
+    val slf4j = "io.insert-koin:koin-logger-slf4j:${Versions.koin}"
 }
 
 object Ktor {
