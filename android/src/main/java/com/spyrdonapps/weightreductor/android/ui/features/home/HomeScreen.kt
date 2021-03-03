@@ -42,7 +42,7 @@ fun HomeScreen(viewModel: MainViewModel, goToSettings: () -> Unit) {
                 HomeTab.Meals -> MealsScreen(modifier = modifier, viewModel)
                 HomeTab.Products -> ProductsScreen(modifier, viewModel)
                 HomeTab.Weighings -> WeighingsScreen(modifier, viewModel)
-                HomeTab.Profile -> ProfileScreen(modifier, viewModel)
+                HomeTab.Profile -> ProfileScreen(modifier, viewModel, goToSettings)
             }.exhaustive
         }
     }
