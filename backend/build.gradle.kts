@@ -33,7 +33,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-core:${Versions.exposed}")
     implementation("org.jetbrains.exposed:exposed-dao:${Versions.exposed}")
     implementation("org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}")
-//    implementation("org.jetbrains.exposed:exposed-java-time:${Versions.exposed}") // todo kotlinx-datetime somehow
+    implementation("org.jetbrains.exposed:exposed-java-time:${Versions.exposed}")
 
     testImplementation(Koin.test)
     testImplementation("io.ktor:ktor-server-test-host:${Versions.ktor}")
