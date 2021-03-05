@@ -69,6 +69,9 @@ fun Application.appModule() {
     val weighingsRepository: WeighingsRepository by inject()
 
     routing {
+        get("/") {
+            call.respond("API alive")
+        }
         weighings(weighingsRepository)
     }
 
