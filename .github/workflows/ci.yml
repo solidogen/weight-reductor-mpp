@@ -2,7 +2,7 @@ name: Build and Publish
 on: [ push, pull_request ]
 jobs:
   build:
-    name: Test and Build
+    name: Build and deploy Android and Frontend
     runs-on: ubuntu-latest
     steps:
 
@@ -16,6 +16,21 @@ jobs:
 
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1.0.3
+
+      - name: Generate js files if develop branch
+        if: github.ref == 'refs/heads/develop'
+        run: ./gradlew frontend:browserDistribution
+
+      - name: Deploy js to Netlify if develop branch
+        uses: South-Paw/action-netlify-deploy@v1.2.0
+        if: github.ref == 'refs/heads/develop'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
+          build-dir: './frontend/build/distributions'
+          draft: true
+          comment-on-commit: true
 
       - name: Build devRelease apk if develop branch
         if: github.ref == 'refs/heads/develop'
@@ -43,15 +58,3 @@ jobs:
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: android_dev_testers
           file: ${{steps.sign_dev_release_app.outputs.signedReleaseFile}}
-
-      # TODO NETLIFY DEPLOY AFTER browserDistribution + api type from env in gradle?
-
-#      # If main branch update, deploy to gh-pages
-#      - name: Deploy
-#        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
-#        uses: JamesIves/github-pages-deploy-action@3.7.1
-#        with:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          BRANCH: gh-pages # The branch the action should deploy to.
-#          FOLDER: build/distributions # The folder the action should deploy.
-#          CLEAN: true # Automatically remove deleted files from the deploy branch
