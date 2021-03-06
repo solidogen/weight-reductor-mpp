@@ -4,7 +4,9 @@ import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
 import com.spyrdonapps.weightreductor.backend.di.backendModule
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
 import com.spyrdonapps.weightreductor.backend.routing.weighings
+import com.viartemev.ktor.flyway.FlywayFeature
 import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.locations.*
@@ -32,9 +34,50 @@ fun main() {
     ).start(wait = true)
 }
 
+const val BASIC_AUTH_KEY = "BASIC_AUTH_KEY"
+
 fun Application.appModule() {
     install(DefaultHeaders)
-    install(ContentNegotiation) { json() }
+    install(Locations)
+    install(ContentNegotiation) {
+        json()
+    }
+    install(Compression) {
+        gzip()
+    }
+    install(CallLogging) {
+        level = Level.DEBUG
+    }
+    install(Koin) {
+        modules(backendModule)
+        SLF4JLogger()
+    }
+    install(StatusPages) {
+        exception<Throwable> { cause ->
+            log.error("Internal error", cause)
+            call.respond(HttpStatusCode.InternalServerError, cause.toString())
+        }
+    }
+
+    DatabaseSettings.init()
+
+    install(FlywayFeature) {
+        dataSource = DatabaseSettings.dataSource
+        locations = arrayOf("classpath:db/migration")
+        // fixme - do I need to validate db here?
+    }
+
+    install(Authentication) {
+        basic(BASIC_AUTH_KEY) {
+            validate { credentials ->
+                if (credentials.name == "admin" && credentials.password == "admin") {
+                    return@validate UserIdPrincipal("admin")
+                } else {
+                    null
+                }
+            }
+        }
+    }
     install(CORS) {
         method(HttpMethod.Options)
         method(HttpMethod.Get)
@@ -50,21 +93,6 @@ fun Application.appModule() {
         header(HttpHeaders.Authorization)
         anyHost()
     }
-    install(Compression) { gzip() }
-    install(CallLogging) {
-        level = Level.DEBUG
-    }
-    install(Locations)
-    install(Koin) {
-        modules(backendModule)
-        SLF4JLogger()
-    }
-    install(StatusPages) {
-        exception<Throwable> { cause ->
-            log.error("Internal error", cause)
-            call.respond(HttpStatusCode.InternalServerError, cause.toString())
-        }
-    }
 
     val weighingsRepository: WeighingsRepository by inject()
 
@@ -72,8 +100,12 @@ fun Application.appModule() {
         get("/") {
             call.respond("API alive")
         }
+        authenticate(BASIC_AUTH_KEY) {
+            get("/login") {
+                val user = call.authentication.principal as? UserIdPrincipal ?: error("No principal")
+                call.respond("Now you are logged in, ${user.name}")
+            }
+        }
         weighings(weighingsRepository)
     }
-
-    DatabaseSettings.init()
 }
