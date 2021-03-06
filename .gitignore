@@ -1,4 +1,3 @@
-
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -25,6 +24,8 @@ gradle-app.setting
 /build
 /captures
 
+output-metadata.json
+*.apk
 
 *.xcworkspacedata
 *.xcuserstate

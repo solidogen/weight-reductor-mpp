@@ -6,23 +6,45 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      # Setup Java 11 environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
           java-version: 11
 
-      # Check out current repository
       - name: Fetch Sources
         uses: actions/checkout@v2
 
-      # Validate wrapper
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1.0.3
 
-      # Build application
-      - name: Test and Build
-        run: ./gradlew build
+      - name: Build devRelease apk if develop branch
+        if: github.ref == 'refs/heads/develop'
+        run: ./gradlew assembleDevRelease
+
+      - name: Sign devRelease APK if develop branch
+        uses: r0adkll/sign-android-release@v1
+        if: github.ref == 'refs/heads/develop'
+        # ID used to access action output
+        id: sign_dev_release_app
+        with:
+          releaseDirectory: android/build/outputs/apk/dev/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: "30.0.2"
+
+      - name: Upload devRelease to Firebase App Distribution if develop branch
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        if: github.ref == 'refs/heads/develop'
+        with:
+          appId: ${{secrets.FIREBASE_DEV_APP_ID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: android_dev_testers
+          file: ${{steps.sign_dev_release_app.outputs.signedReleaseFile}}
+
+      # TODO NETLIFY DEPLOY AFTER browserDistribution + api type from env in gradle?
 
 #      # If main branch update, deploy to gh-pages
 #      - name: Deploy
