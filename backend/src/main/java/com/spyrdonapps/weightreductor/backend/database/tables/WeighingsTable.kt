@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.`java-time`.timestamp
 import java.time.Instant
 
-object WeighingsTable : IntIdTable() {
+object WeighingsTable : IntIdTable(name = "weighings") {
     val weight: Column<Float> = float("weight")
     val date: Column<Instant> = timestamp("date")
 }

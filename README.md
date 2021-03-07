@@ -6,10 +6,9 @@
 
 Open with Android Studio Canary (change JDK from Bundled JDK to JDK 11)
 
-## Running (also see scripts folder in root)
-- Backend  -->   `./gradlew backend:run` (**use terminal if backend code has errors in IDE, this is false positive**)
-- Frontend -->   `./gradlew frontend:run --continuous` (**use terminal if task looks frozen with AS Gradle plugin**)
-- Android: -->   AS will detect run configuration, if not, `./gradlew android:installDebug`
+## Running apps
+- see scripts folder in root for BE and FE local deploys
+- AS should create run config for Android
 
 ## Killing zombie BE/FE apps (also see scripts folder in root)
 - Linux - `fuser -n tcp -k 9090`
@@ -18,7 +17,12 @@ Open with Android Studio Canary (change JDK from Bundled JDK to JDK 11)
 9090 is default backend port, 8080 is frontend one
 
 ## I can't run shell scripts
-`chmod +x testDeployFrontend.sh`
+`chmod +x localDeployBackend.sh`
+
+## How do I setup database for local BE deploy?
+`sudo -u postgres -i` (I used `sudo su - postgres` but they say it's bad)
+`psql -U postgres`
+`create database weightreductor`
 
 ## Credits
 Project setup is based on great [PeopleInSpace](https://github.com/joreilly/PeopleInSpace) project by [John O'Reilly](https://github.com/joreilly)

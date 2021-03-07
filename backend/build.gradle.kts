@@ -26,7 +26,6 @@ dependencies {
     implementation("io.ktor:ktor-websockets:${Versions.ktor}")
 
     implementation("org.postgresql:postgresql:${Versions.postgres}")
-    implementation("com.h2database:h2:1.4.200")
     implementation("com.zaxxer:HikariCP:4.0.2")
     implementation("org.flywaydb:flyway-core:7.5.3")
     implementation("com.viartemev:ktor-flyway-feature:1.2.2")
