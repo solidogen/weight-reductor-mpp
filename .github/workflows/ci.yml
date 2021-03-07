@@ -17,6 +17,9 @@ jobs:
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1.0.3
 
+      - name: Backend unit tests - schema validation
+        run: ./gradlew backend:test
+
       - name: Generate js files if develop branch
         if: github.ref == 'refs/heads/develop'
         run: ./gradlew frontend:browserDistribution
