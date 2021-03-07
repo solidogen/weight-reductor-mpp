@@ -1,4 +1,4 @@
 #!/bin/bash
-cd ..
+cd ../..
 ./gradlew frontend:browserDistribution
 netlify deploy --prod
