@@ -34,8 +34,21 @@ allprojects {
     }
 }
 
+// fixme new syntax like in backend build.gradle
+
 // Alias "installDist" as "stage" for Heroku, to prepare jar for Procfile access
 tasks.create("stage") {
     dependsOn(":backend:installDist")
 }
 
+tasks {
+    create<Copy>("installGitHook") {
+        group = "git"
+        from(file("${rootProject.rootDir}/scripts/git/pre-commit"))
+        into(file("${rootProject.rootDir}/.git/hooks"))
+        fileMode = 0b111101101
+    }
+    val installGitHook by existing
+    val dependedTask = getByPath(":backend:compileKotlin")
+    dependedTask.dependsOn(installGitHook)
+}
