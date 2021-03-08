@@ -9,15 +9,18 @@ import javax.sql.DataSource
 
 object DatabaseSettings : KoinComponent {
 
-    val remoteJdbcUrl: String?
+    private val remoteJdbcUrl: String?
         get() = System.getenv("JDBC_DATABASE_URL")
 
     lateinit var dataSource: DataSource
         private set
 
+    lateinit var database: Database
+        private set
+
     fun init(appRunMode: AppRunMode) {
         dataSource = createDataSource(appRunMode)
-        Database.connect(dataSource)
+        database = Database.connect(dataSource)
     }
 
     private fun createDataSource(appRunMode: AppRunMode): DataSource {
