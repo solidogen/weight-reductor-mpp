@@ -51,7 +51,10 @@ fun Application.appModule(appRunMode: AppRunMode) {
     install(CallLogging) {
         level = Level.DEBUG
     }
-    if (appRunMode == AppRunMode.Default) {
+    /**
+    * This way I can override/mock dependencies within unit tests as it's not possible to startKoin twice
+    * */
+    if (appRunMode != AppRunMode.UnitTesting) {
         install(Koin) {
             modules(backendModule)
             SLF4JLogger()

@@ -40,10 +40,12 @@ class SchemaValidationTest : KoinTest {
      * */
     @Test
     fun testSchemaValidationAfterMigrations() {
-        if (DatabaseSettings.remoteJdbcUrl != null) {
-            // don't break the build if heroku
+        if (System.getenv("IS_CI_BUILD") == "true") {
+            // don't break the build if Github CI
+            println("CI build detected, skipping schema validation")
             return
         }
+        println("local build detected, validating database schema")
         withTestApplication({
             appModule(appRunMode = AppRunMode.UnitTesting)
         }) {
