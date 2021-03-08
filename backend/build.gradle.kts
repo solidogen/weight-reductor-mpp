@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileWriter
+
 plugins {
     id("kotlin-platform-jvm")
     application
@@ -41,4 +44,47 @@ dependencies {
 
 application {
     mainClass.set("com.spyrdonapps.weightreductor.backend.BackendAppKt")
+}
+
+val ciVariablesPath = "build/generated/source/ci"
+
+kotlin {
+    sourceSets["main"].kotlin.srcDir(ciVariablesPath)
+}
+
+tasks {
+    val generateCiVariables by registering {
+        val isCiBuildKey = "IS_CI_BUILD"
+        group = "codegen"
+        inputs.files("../ci-variables.properties")
+        outputs.dir(ciVariablesPath)
+        outputs.upToDateWhen { false }
+        doLast {
+            val outputDir = outputs.files.single()
+            val properties = Properties().apply {
+                if (!inputs.files.singleFile.exists()) {
+                    /**
+                    * Create this file if doesn't exist (non-CI behavior, CI should create this file itself and set needed variables)
+                    * */
+                    setProperty(isCiBuildKey, "false")
+                    val writer = FileWriter(inputs.files.singleFile, false)
+                    store(writer, "CI variables can be changed by generating a ci-variables.properties file.")
+                }
+                inputs.files.single().inputStream().use { load(it) }
+            }
+            File(outputDir, "CiVariables.kt").printWriter().use { writer ->
+                writer.println("package com.spyrdonapps.weightreductor.backend")
+                writer.println("")
+                writer.println("object CiVariables {")
+                for (name in properties.stringPropertyNames().sorted().filter { it == isCiBuildKey }) {
+                    writer.println("    const val $name = \"${properties.getProperty(name)}\"")
+                }
+                writer.println("}")
+            }
+        }
+    }
+    val compileKotlin by existing
+    compileKotlin {
+        dependsOn(generateCiVariables)
+    }
 }

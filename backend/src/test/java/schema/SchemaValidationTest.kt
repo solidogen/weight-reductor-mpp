@@ -1,11 +1,14 @@
 package schema
 
+import com.spyrdonapps.weightreductor.backend.CiVariables
 import com.spyrdonapps.weightreductor.backend.appModule
 import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
 import com.spyrdonapps.weightreductor.backend.deletelater.Weighing
 import com.spyrdonapps.weightreductor.backend.di.backendModule
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
+import com.spyrdonapps.weightreductor.backend.util.extensions.isCiBuild
 import com.spyrdonapps.weightreductor.backend.util.utils.AppRunMode
+import io.ktor.application.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
@@ -17,6 +20,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import java.util.*
 import kotlin.test.assertEquals
 
 class SchemaValidationTest : KoinTest {
@@ -50,7 +54,7 @@ class SchemaValidationTest : KoinTest {
      * */
     @Test
     fun testSchemaValidationAfterMigrations() {
-        if (System.getenv("IS_CI_BUILD") == "true") {
+        if (CiVariables.isCiBuild) {
             // don't break the build if Github CI
             println("CI build detected, skipping schema validation")
             return

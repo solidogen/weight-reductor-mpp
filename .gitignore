@@ -37,3 +37,5 @@ xcschememanagement.plist
 
 # Local Netlify folder
 .netlify
+
+/ci-variables.properties

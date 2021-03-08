@@ -1,8 +1,22 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
+
 plugins {
     kotlin("multiplatform")
     id("kotlinx-serialization")
     id("com.android.library")
     id("com.squareup.sqldelight")
+    id("com.codingfeline.buildkonfig")
+}
+
+buildkonfig {
+    packageName = "com.spyrdonapps.weightreductor"
+
+    // fixme add flavors based on environment.properties file which will be created by CI
+    val asd = ""
+
+    defaultConfigs {
+        buildConfigField(Type.STRING, "RAW_ENVIRONMENT", asd)
+    }
 }
 
 android {
