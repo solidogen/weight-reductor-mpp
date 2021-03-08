@@ -59,7 +59,8 @@ class SchemaValidationTest : KoinTest {
             println("CI build detected, skipping schema validation")
             return
         }
-        println("Local build detected, validating database schema")
+        println("Local build detected, validating database schema. " +
+                "If this is not a local build, CI didn't run generateCiVariables.sh script.")
         withTestApplication({
             appModule(appRunMode = AppRunMode.UnitTesting)
         }) {
