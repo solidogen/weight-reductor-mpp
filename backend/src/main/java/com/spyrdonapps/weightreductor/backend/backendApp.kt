@@ -4,6 +4,7 @@ import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
 import com.spyrdonapps.weightreductor.backend.di.backendModule
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
 import com.spyrdonapps.weightreductor.backend.routing.weighings
+import com.spyrdonapps.weightreductor.backend.util.utils.AppRunMode
 import com.viartemev.ktor.flyway.FlywayFeature
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -29,14 +30,16 @@ fun main() {
     embeddedServer(
         Netty,
         port = System.getenv("PORT")?.toInt() ?: 9090,
-        module = Application::appModule,
+        module = {
+            appModule(AppRunMode.Default)
+        },
         watchPaths = listOf("backend") // fixme - this doesn't recompile BE
     ).start(wait = true)
 }
 
 const val BASIC_AUTH_KEY = "BASIC_AUTH_KEY"
 
-fun Application.appModule() {
+fun Application.appModule(appRunMode: AppRunMode) {
     install(DefaultHeaders)
     install(Locations)
     install(ContentNegotiation) {
@@ -48,9 +51,11 @@ fun Application.appModule() {
     install(CallLogging) {
         level = Level.DEBUG
     }
-    install(Koin) {
-        modules(backendModule)
-        SLF4JLogger()
+    if (appRunMode == AppRunMode.Default) {
+        install(Koin) {
+            modules(backendModule)
+            SLF4JLogger()
+        }
     }
     install(StatusPages) {
         exception<Throwable> { cause ->
@@ -59,12 +64,11 @@ fun Application.appModule() {
         }
     }
 
-    DatabaseSettings.init()
+    DatabaseSettings.init(appRunMode)
 
     install(FlywayFeature) {
         dataSource = DatabaseSettings.dataSource
         locations = arrayOf("classpath:db/migration")
-        // fixme - do I need to validate db here?
     }
 
     install(Authentication) {
@@ -102,7 +106,8 @@ fun Application.appModule() {
         }
         authenticate(BASIC_AUTH_KEY) {
             get("/login") {
-                val user = call.authentication.principal as? UserIdPrincipal ?: error("No principal")
+                val user =
+                    call.authentication.principal as? UserIdPrincipal ?: error("No principal")
                 call.respond("Now you are logged in, ${user.name}")
             }
         }

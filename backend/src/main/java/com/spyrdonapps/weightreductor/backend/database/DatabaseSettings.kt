@@ -1,29 +1,35 @@
 package com.spyrdonapps.weightreductor.backend.database
 
+import com.spyrdonapps.weightreductor.backend.util.utils.AppRunMode
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
+import org.koin.core.component.KoinComponent
 import javax.sql.DataSource
 
-object DatabaseSettings {
+object DatabaseSettings : KoinComponent {
 
     lateinit var dataSource: DataSource
         private set
 
-    fun init() {
-        dataSource = createDataSource()
+    fun init(appRunMode: AppRunMode) {
+        dataSource = createDataSource(appRunMode)
         Database.connect(dataSource)
     }
 
-    private fun createDataSource(): DataSource {
-        val remoteJdbcUrl = System.getenv("JDBC_DATABASE_URL")
+    private fun createDataSource(appRunMode: AppRunMode): DataSource {
+        val remoteJdbcUrl = System.getenv("JDBC_DATABASE_URL") // non-null if heroku
         val hikariConfig: HikariConfig = if (remoteJdbcUrl != null) {
             HikariConfig().apply {
                 jdbcUrl = remoteJdbcUrl
             }
         } else {
+            val url = when (appRunMode) {
+                AppRunMode.Default -> "jdbc:postgresql:weightreductor?user=postgres"
+                AppRunMode.UnitTesting -> "jdbc:postgresql:weightreductorunittests?user=postgres"
+            }
             HikariConfig().apply {
-                jdbcUrl = "jdbc:postgresql:weightreductor?user=postgres"
+                jdbcUrl = url
             }
         }
         hikariConfig.validate()
