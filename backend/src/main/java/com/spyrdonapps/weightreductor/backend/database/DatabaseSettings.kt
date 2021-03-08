@@ -9,6 +9,9 @@ import javax.sql.DataSource
 
 object DatabaseSettings : KoinComponent {
 
+    val remoteJdbcUrl: String?
+        get() = System.getenv("JDBC_DATABASE_URL")
+
     lateinit var dataSource: DataSource
         private set
 
@@ -18,7 +21,6 @@ object DatabaseSettings : KoinComponent {
     }
 
     private fun createDataSource(appRunMode: AppRunMode): DataSource {
-        val remoteJdbcUrl = System.getenv("JDBC_DATABASE_URL") // non-null if heroku
         val hikariConfig: HikariConfig = if (remoteJdbcUrl != null) {
             HikariConfig().apply {
                 jdbcUrl = remoteJdbcUrl

@@ -1,6 +1,7 @@
 package schema
 
 import com.spyrdonapps.weightreductor.backend.appModule
+import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
 import com.spyrdonapps.weightreductor.backend.deletelater.Weighing
 import com.spyrdonapps.weightreductor.backend.di.backendModule
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
@@ -33,11 +34,16 @@ class SchemaValidationTest : KoinTest {
     }
 
     /**
-     * This will currently fail on heroku as I would have to create a second db there.
-     * For now test locally - last resort are pre-commit tests, but this is not desirable
+     * This is called with every localDeployBackend script call.
+     * Won't be called on CI, but I guess I will not ever change schema and not run the server locally before pushing.
+     * May be called as pre-commit hook if this is not enough, should be fast enough
      * */
     @Test
     fun testSchemaValidationAfterMigrations() {
+        if (DatabaseSettings.remoteJdbcUrl != null) {
+            // don't break the build if heroku
+            return
+        }
         withTestApplication({
             appModule(appRunMode = AppRunMode.UnitTesting)
         }) {
