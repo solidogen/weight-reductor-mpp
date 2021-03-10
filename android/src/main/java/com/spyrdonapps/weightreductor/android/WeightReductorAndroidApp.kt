@@ -23,9 +23,9 @@ class WeightReductorAndroidApp : Application() {
 
     private val forcedEnvironment: Environment
         get() = when (BuildConfig.API_URL) {
-            Environment.localAndroidUrl -> Environment.LocalAndroid
-            Environment.devUrl -> Environment.Dev
-            Environment.prodUrl -> Environment.Prod
+            Environment.localAndroidEmulator -> Environment.LocalAndroid
+            Environment.dev -> Environment.Dev
+            Environment.prod -> Environment.Prod
             else -> error("No environment for url: ${BuildConfig.API_URL}")
         }
 }

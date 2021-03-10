@@ -39,7 +39,7 @@ android {
             applicationIdSuffix = ".local"
             versionNameSuffix = "-local"
             resValue("string", "app_name", "WR Local")
-            buildConfigField("String", "API_URL", "\"${ApiUrls.localAndroid}\"")
+            buildConfigField("String", "API_URL", "\"${ApiUrls.localAndroidEmulator}\"")
         }
         create("dev") {
             applicationIdSuffix = ".dev"

@@ -1,9 +1,9 @@
 object Versions {
     const val kotlin = "1.4.31"
-    const val kotlinCoroutines = "1.4.2-native-mt"
+    const val kotlinCoroutines = "1.4.3-native-mt"
     const val ktor = "1.5.2"
     const val kotlinxSerialization = "1.0.1"
-    const val koin = "3.0.1-alpha-6"
+    const val koin = "3.0.1-beta-1"
     const val sqlDelight = "1.4.2"
     const val kermit = "0.1.8"
 
@@ -30,8 +30,10 @@ object AndroidSdk {
     const val target = 30
 }
 
+// todo generate from .properties file (duplicate)
 object ApiUrls {
-    const val localAndroid = "http://10.0.2.2:9090"
+    const val local = "http://0.0.0.0:9090"
+    const val localAndroidEmulator = "http://10.0.2.2:9090"
     const val dev = "https://dev-wr.herokuapp.com"
     const val prod = "https://weightreductor.herokuapp.com"
 }

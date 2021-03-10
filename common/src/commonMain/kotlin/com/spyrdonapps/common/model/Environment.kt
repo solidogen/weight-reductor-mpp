@@ -2,15 +2,16 @@ package com.spyrdonapps.common.model
 
 sealed class Environment(val baseUrl: String) {
 
-    object Local : Environment(localUrl)
-    object LocalAndroid : Environment(localAndroidUrl)
-    object Dev : Environment(devUrl)
-    object Prod : Environment(prodUrl)
+    object Local : Environment(local)
+    object LocalAndroid : Environment(localAndroidEmulator)
+    object Dev : Environment(dev)
+    object Prod : Environment(prod)
 
+    // todo generate from .properties file (duplicate)
     companion object {
-        const val localUrl = "http://0.0.0.0:9090"
-        const val localAndroidUrl = "http://10.0.2.2:9090"
-        const val devUrl = "https://dev-wr.herokuapp.com"
-        const val prodUrl = "https://weightreductor.herokuapp.com"
+        const val local = "http://0.0.0.0:9090"
+        const val localAndroidEmulator = "http://10.0.2.2:9090"
+        const val dev = "https://dev-wr.herokuapp.com"
+        const val prod = "https://weightreductor.herokuapp.com"
     }
 }
