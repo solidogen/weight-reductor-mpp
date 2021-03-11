@@ -17,11 +17,11 @@ jobs:
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1.0.3
 
-      - name: Generate CI variables
+      - name: Set as CI build
         run: |
           cd scripts/ci
-          chmod +x generateCiVariables.sh
-          bash generateCiVariables.sh
+          chmod +x setAsCiBuild.sh
+          bash setAsCiBuild.sh
 
       - name: Backend unit tests - schema validation
         run: ./gradlew backend:test

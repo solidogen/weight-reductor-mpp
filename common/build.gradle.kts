@@ -13,7 +13,7 @@ buildkonfig {
     exposeObjectWithName = "JsBuildConfig"
 
     // todo add flavors based on environment.properties file which will be created by CI
-    val defaultLocalEnv = "${RawEnvironment.Dev}"
+    val defaultLocalEnv = "${RawEnvironment.Local}"
 
 //    val overriddenEnv = fetch from properties file, no need for codegen I guess
 // just create .properties file first
