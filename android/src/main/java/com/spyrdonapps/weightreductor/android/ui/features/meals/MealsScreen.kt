@@ -7,13 +7,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.spyrdonapps.weightreductor.android.ui.features.main.MainViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun MealsScreen(
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel
+    viewModel: MainViewModel = getViewModel()
 ) {
-    Box(modifier = modifier.fillMaxSize().background(Color.Blue)) {
+    Box(modifier = modifier
+        .fillMaxSize()
+        .background(Color.Blue)) {
 
     }
 }

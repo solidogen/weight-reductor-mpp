@@ -9,9 +9,13 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.spyrdonapps.weightreductor.android.ui.features.main.MainViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun SettingsScreen(upPress: () -> Unit, viewModel: MainViewModel) {
+fun SettingsScreen(
+    upPress: () -> Unit,
+    viewModel: MainViewModel = getViewModel()
+) {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Color.Gray)) {

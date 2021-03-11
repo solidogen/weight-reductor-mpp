@@ -21,7 +21,7 @@ import com.spyrdonapps.weightreductor.android.ui.features.weighings.WeighingsScr
 import com.spyrdonapps.common.util.utils.exhaustive
 
 @Composable
-fun HomeScreen(viewModel: MainViewModel, goToSettings: () -> Unit) {
+fun HomeScreen(goToSettings: () -> Unit) {
     val (currentTab, setCurrentTab) = rememberSaveable {
         mutableStateOf(HomeTab.Meals)
     }
@@ -39,10 +39,10 @@ fun HomeScreen(viewModel: MainViewModel, goToSettings: () -> Unit) {
         val modifier = Modifier.padding(innerPadding)
         Crossfade(currentTab) { tab ->
             when (tab) {
-                HomeTab.Meals -> MealsScreen(modifier = modifier, viewModel)
-                HomeTab.Products -> ProductsScreen(modifier, viewModel)
-                HomeTab.Weighings -> WeighingsScreen(modifier, viewModel)
-                HomeTab.Profile -> ProfileScreen(modifier, viewModel, goToSettings)
+                HomeTab.Meals -> MealsScreen(modifier = modifier)
+                HomeTab.Products -> ProductsScreen(modifier = modifier)
+                HomeTab.Weighings -> WeighingsScreen(modifier = modifier)
+                HomeTab.Profile -> ProfileScreen(modifier = modifier, goToSettings = goToSettings)
             }.exhaustive
         }
     }

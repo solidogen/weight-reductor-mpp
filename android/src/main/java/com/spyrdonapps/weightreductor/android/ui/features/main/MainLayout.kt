@@ -13,7 +13,7 @@ import com.spyrdonapps.weightreductor.android.util.Navigator
 import com.spyrdonapps.common.util.utils.exhaustive
 
 @Composable
-fun MainLayout(onBackPressedDispatcher: OnBackPressedDispatcher, viewModel: MainViewModel) {
+fun MainLayout(onBackPressedDispatcher: OnBackPressedDispatcher) {
     val navigator: Navigator<Destination> = rememberSaveable(
         saver = Navigator.saver<Destination>(onBackPressedDispatcher)
     ) {
@@ -23,8 +23,8 @@ fun MainLayout(onBackPressedDispatcher: OnBackPressedDispatcher, viewModel: Main
     // todo app theme
     Crossfade(targetState = navigator.current) { destination ->
         when (destination) {
-            Destination.Home -> HomeScreen(viewModel = viewModel, goToSettings = actions.goToSettings)
-            Destination.Settings -> SettingsScreen(viewModel = viewModel, upPress = actions.upPress)
+            Destination.Home -> HomeScreen(goToSettings = actions.goToSettings)
+            Destination.Settings -> SettingsScreen(upPress = actions.upPress)
         }.exhaustive
     }
 }

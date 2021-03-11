@@ -21,11 +21,12 @@ import androidx.compose.ui.unit.dp
 import com.spyrdonapps.common.model.Weighing
 import com.spyrdonapps.common.util.extensions.getStringWithFormat
 import com.spyrdonapps.weightreductor.android.ui.features.main.MainViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun WeighingsScreen(
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel
+    viewModel: MainViewModel = getViewModel()
 ) {
     val weighings by viewModel.weighingsLiveData.observeAsState()
 
