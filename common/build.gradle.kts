@@ -1,4 +1,5 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
+import java.util.Properties
 
 plugins {
     kotlin("multiplatform")
@@ -8,17 +9,22 @@ plugins {
     id("com.codingfeline.buildkonfig")
 }
 
+/**
+ * Imitating Android's BuildConfig for other clients.
+ * Environment can be changed by running local deploy scripts or by CI
+ * */
 buildkonfig {
     packageName = "com.spyrdonapps.weightreductor"
     exposeObjectWithName = "JsBuildConfig"
 
-    // todo add flavors based on environment.properties file which will be created by CI
-    val defaultLocalEnv = "${RawEnvironment.Local}"
-
-//    val overriddenEnv = fetch from properties file, no need for codegen I guess
-// just create .properties file first
+    val defaultEnvironment = "${RawEnvironment.Local}"
+    val environmentTag = "raw_environment"
+    val properties = Properties().apply {
+        file("../environment.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+    }
+    val overriddenEnvironment: String? = properties.getProperty(environmentTag)
     defaultConfigs {
-        buildConfigField(Type.STRING, "RAW_ENVIRONMENT", defaultLocalEnv)
+        buildConfigField(Type.STRING, "RAW_ENVIRONMENT", overriddenEnvironment ?: defaultEnvironment)
     }
 }
 

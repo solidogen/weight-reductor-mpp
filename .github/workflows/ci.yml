@@ -23,11 +23,25 @@ jobs:
           chmod +x setAsCiBuild.sh
           bash setAsCiBuild.sh
 
+      - name: Set frontend Dev environment if develop branch
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          cd scripts/environment
+          chmod +x setDevEnviroment.sh
+          bash setDevEnviroment.sh
+
+      - name: Set frontend Prod environment if master branch
+        if: github.ref == 'refs/heads/master'
+        run: |
+          cd scripts/environment
+          chmod +x setProdEnviroment.sh
+          bash setProdEnviroment.sh
+
       - name: Backend unit tests - schema validation
         run: ./gradlew backend:test
 
-      - name: Generate js files if develop branch
-        if: github.ref == 'refs/heads/develop'
+      - name: Generate js files if develop or master branch
+        if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'
         run: ./gradlew frontend:browserDistribution
 
       - name: Deploy js to Netlify if develop branch
@@ -39,6 +53,17 @@ jobs:
           netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
           build-dir: './frontend/build/distributions'
           draft: true
+          comment-on-commit: true
+
+      - name: Deploy js to Netlify if master branch (EXPERIMENTAL, NOT SURE ABOUT THIS YET)
+        uses: South-Paw/action-netlify-deploy@v1.2.0
+        if: github.ref == 'refs/heads/master'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
+          build-dir: './frontend/build/distributions'
+          draft: false
           comment-on-commit: true
 
       - name: Build devRelease apk if develop branch

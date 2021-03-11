@@ -39,3 +39,4 @@ xcschememanagement.plist
 .netlify
 
 /ci-variables.properties
+/environment.properties
