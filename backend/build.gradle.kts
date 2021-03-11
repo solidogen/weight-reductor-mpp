@@ -8,6 +8,9 @@ plugins {
 }
 
 dependencies {
+    // todo - I'm not sure about this. I don't think I need anything from common module in backend,
+    //  I could share dto classes in plain gradle module instead - this way AGP doesn't break because of JVM sharing (probably)
+    // todo - remove this and see if anything changed
     implementation(project(":common"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}")

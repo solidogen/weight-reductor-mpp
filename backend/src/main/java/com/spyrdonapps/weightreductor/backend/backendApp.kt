@@ -33,7 +33,7 @@ fun main() {
         module = {
             appModule(AppRunMode.Default)
         },
-        watchPaths = listOf("backend") // fixme - this doesn't recompile BE
+        watchPaths = listOf("backend") // todo - this doesn't recompile BE
     ).start(wait = true)
 }
 

@@ -28,13 +28,14 @@ allprojects {
     tasks {
         withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
             kotlinOptions {
+                // todo useIR = true, also cleanup those declaration between modules
                 jvmTarget = "1.8"
             }
         }
     }
 }
 
-// fixme new syntax like in backend build.gradle
+// todo new syntax like in backend build.gradle
 
 // Alias "installDist" as "stage" for Heroku, to prepare jar for Procfile access
 tasks.create("stage") {

@@ -10,12 +10,15 @@ plugins {
 
 buildkonfig {
     packageName = "com.spyrdonapps.weightreductor"
+    exposeObjectWithName = "JsBuildConfig"
 
-    // fixme add flavors based on environment.properties file which will be created by CI
-    val asd = ""
+    // todo add flavors based on environment.properties file which will be created by CI
+    val defaultLocalEnv = "${RawEnvironment.Dev}"
 
+//    val overriddenEnv = fetch from properties file, no need for codegen I guess
+// just create .properties file first
     defaultConfigs {
-        buildConfigField(Type.STRING, "RAW_ENVIRONMENT", asd)
+        buildConfigField(Type.STRING, "RAW_ENVIRONMENT", defaultLocalEnv)
     }
 }
 
@@ -54,6 +57,9 @@ kotlin {
         compilations.all {
             kotlinOptions {
                 allWarningsAsErrors = true
+                freeCompilerArgs = listOf(
+                    "-Xopt-in=kotlin.RequiresOptIn"
+                )
             }
         }
     }

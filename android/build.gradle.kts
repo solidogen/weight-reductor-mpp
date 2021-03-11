@@ -35,21 +35,24 @@ android {
     }
     flavorDimensions("version")
     productFlavors {
+        /**
+        * TODO find a way to connect physical device to locally hosted backend (not super important, emulator works fine for now)
+        * */
         create("local") {
             applicationIdSuffix = ".local"
             versionNameSuffix = "-local"
             resValue("string", "app_name", "WR Local")
-            buildConfigField("String", "API_URL", "\"${ApiUrls.localAndroidEmulator}\"")
+            buildConfigField("String", "RAW_ENVIRONMENT", "\"${RawEnvironment.LocalAndroidEmulator}\"")
         }
         create("dev") {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
             resValue("string", "app_name", "WR Dev")
-            buildConfigField("String", "API_URL", "\"${ApiUrls.dev}\"")
+            buildConfigField("String", "RAW_ENVIRONMENT", "\"${RawEnvironment.Dev}\"")
         }
         create("prod") {
             resValue("string", "app_name", "Weight Reductor")
-            buildConfigField("String", "API_URL", "\"${ApiUrls.prod}\"")
+            buildConfigField("String", "RAW_ENVIRONMENT", "\"${RawEnvironment.Prod}\"")
         }
     }
     compileOptions {

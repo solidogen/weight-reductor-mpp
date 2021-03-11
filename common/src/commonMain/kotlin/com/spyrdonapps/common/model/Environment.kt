@@ -1,17 +1,32 @@
 package com.spyrdonapps.common.model
 
-sealed class Environment(val baseUrl: String) {
+import com.spyrdonapps.common.util.extensions.valueForNameOrNull
+import com.spyrdonapps.common.util.utils.ClientType
 
-    object Local : Environment(local)
-    object LocalAndroid : Environment(localAndroidEmulator)
-    object Dev : Environment(dev)
-    object Prod : Environment(prod)
+const val localUrl = "http://0.0.0.0:9090"
+const val localAndroidEmulatorUrl = "http://10.0.2.2:9090"
+const val devUrl = "https://dev-wr.herokuapp.com"
+const val prodUrl = "https://weightreductor.herokuapp.com"
 
-    // todo generate from .properties file (duplicate)
+enum class Environment(val baseUrl: String) {
+    Local(localUrl),
+    LocalAndroidEmulator(localAndroidEmulatorUrl),
+    Dev(devUrl),
+    Prod(prodUrl);
+    
+    fun ensureAvailableForClientType(clientType: ClientType) {
+        if (clientType == ClientType.Javascript && this == LocalAndroidEmulator) {
+            error("LocalAndroidEmulator environment not available for frontend client")
+        }
+        if (clientType == ClientType.Android && this == Local) {
+            error("Local backend access is currently not supported on physical Android device, " +
+                    "use LocalAndroidEmulator environment on emulator instead for now")
+        }
+    }
+
     companion object {
-        const val local = "http://0.0.0.0:9090"
-        const val localAndroidEmulator = "http://10.0.2.2:9090"
-        const val dev = "https://dev-wr.herokuapp.com"
-        const val prod = "https://weightreductor.herokuapp.com"
+        fun fromRawEnvironment(rawEnvironment: String): Environment =
+            valueForNameOrNull<Environment>(rawEnvironment)
+                ?: error("No Environment enum for raw enum string: $rawEnvironment")
     }
 }

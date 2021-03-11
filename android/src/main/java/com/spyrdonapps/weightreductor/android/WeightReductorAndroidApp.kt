@@ -4,6 +4,7 @@ import android.app.Application
 import com.spyrdonapps.common.di.initKoin
 import com.spyrdonapps.common.model.Environment
 import com.spyrdonapps.common.repository.appContext
+import com.spyrdonapps.common.repository.clientType
 import com.spyrdonapps.weightreductor.BuildConfig
 import com.spyrdonapps.weightreductor.android.di.appModule
 import org.koin.android.ext.koin.androidContext
@@ -14,18 +15,15 @@ class WeightReductorAndroidApp : Application() {
     override fun onCreate() {
         super.onCreate()
         appContext = this
-        initKoin(enableNetworkLogs = true, forcedEnvironment = forcedEnvironment) {
+        val environment = Environment.fromRawEnvironment(BuildConfig.RAW_ENVIRONMENT)
+        environment.ensureAvailableForClientType(clientType = clientType)
+        initKoin(
+            enableNetworkLogs = true,
+            environment = environment
+        ) {
             androidLogger()
             androidContext(this@WeightReductorAndroidApp)
             modules(appModule)
         }
     }
-
-    private val forcedEnvironment: Environment
-        get() = when (BuildConfig.API_URL) {
-            Environment.localAndroidEmulator -> Environment.LocalAndroid
-            Environment.dev -> Environment.Dev
-            Environment.prod -> Environment.Prod
-            else -> error("No environment for url: ${BuildConfig.API_URL}")
-        }
 }

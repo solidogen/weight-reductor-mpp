@@ -17,22 +17,20 @@ import org.koin.dsl.module
 
 fun initKoin(
     enableNetworkLogs: Boolean = false,
-    forcedEnvironment: Environment? = null,
+    environment: Environment,
     appDeclaration: KoinAppDeclaration = {}
-) =
-    startKoin {
-        modules(commonModule(
+) = startKoin {
+    modules(
+        commonModule(
             enableNetworkLogs = enableNetworkLogs,
-            forcedEnvironment = forcedEnvironment
-        ))
-        appDeclaration()
-    }
+            environment = environment
+        )
+    )
+    appDeclaration()
+}
 
-fun commonModule(enableNetworkLogs: Boolean, forcedEnvironment: Environment?) = module {
-
-    // todo find a way not to accidentally commit Local to prod
-    single<Environment> { forcedEnvironment ?: Environment.Local }
-
+fun commonModule(enableNetworkLogs: Boolean, environment: Environment) = module {
+    single { environment }
     single { createJson() }
     single { Kermit(getLogger()) }
     single { createHttpClient(json = get(), enableNetworkLogs = enableNetworkLogs, kermit = get()) }

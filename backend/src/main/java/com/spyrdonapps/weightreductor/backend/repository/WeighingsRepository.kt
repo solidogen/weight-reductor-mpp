@@ -4,6 +4,8 @@ import com.spyrdonapps.weightreductor.backend.datasource.WeighingsDataSource
 import com.spyrdonapps.weightreductor.backend.deletelater.Weighing
 import kotlinx.datetime.Instant
 
+// todo - I can get rid of this class and operate on the datasource itself
+//  also client Repository has almost the same name
 class WeighingsRepository(private val weighingsDataSource: WeighingsDataSource) {
 
     suspend fun getAllWeighings(): List<Weighing> = weighingsDataSource.getAllWeighings()
