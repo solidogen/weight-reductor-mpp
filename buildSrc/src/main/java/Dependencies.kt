@@ -4,7 +4,7 @@ object Versions {
     const val ktor = "1.5.2"
     const val kotlinxSerialization = "1.0.1"
     const val koin = "3.0.1-beta-1"
-    const val sqlDelight = "1.4.2"
+    const val sqlDelight = "1.4.3"
     const val kermit = "0.1.8"
 
     const val exposed = "0.29.1"
@@ -14,9 +14,9 @@ object Versions {
 
     const val sqliteJdbcDriver = "3.30.1"
     const val slf4j = "1.7.30"
-    const val compose = "1.0.0-beta01"
-    const val nav_compose = "1.0.0-alpha08"
-    const val accompanist = "0.6.0"
+    const val compose = "1.0.0-beta02"
+    const val nav_compose = "1.0.0-alpha09"
+    const val accompanist = "0.6.2"
 
     const val junit = "4.13.2"
     const val testRunner = "1.3.0"
