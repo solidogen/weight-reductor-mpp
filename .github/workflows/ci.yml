@@ -44,7 +44,7 @@ jobs:
         if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'
         run: ./gradlew frontend:browserDistribution
 
-      - name: Deploy js to Netlify if develop branch
+      - name: Deploy js as Netlify Draft if develop branch
         uses: South-Paw/action-netlify-deploy@v1.2.0
         if: github.ref == 'refs/heads/develop'
         with:
