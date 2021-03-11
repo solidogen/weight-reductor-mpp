@@ -1,0 +1,97 @@
+{
+  "project_info": {
+    "project_number": "682651341371",
+    "project_id": "weight-reductor",
+    "storage_bucket": "weight-reductor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682651341371:android:81857dcd3ed324ab22021e",
+        "android_client_info": {
+          "package_name": "com.spyrdonapps.weightreductor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682651341371-f40evnvc0ici9tar36mvpsih83aqgiur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1IY7A5OWFR8iXYYAbq4jzoC10nNzR8q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682651341371-f40evnvc0ici9tar36mvpsih83aqgiur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682651341371:android:cfcf8a78ec5bd45422021e",
+        "android_client_info": {
+          "package_name": "com.spyrdonapps.weightreductor.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682651341371-f40evnvc0ici9tar36mvpsih83aqgiur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1IY7A5OWFR8iXYYAbq4jzoC10nNzR8q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682651341371-f40evnvc0ici9tar36mvpsih83aqgiur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682651341371:android:22c19cea395f3ddb22021e",
+        "android_client_info": {
+          "package_name": "com.spyrdonapps.weightreductor.local"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682651341371-f40evnvc0ici9tar36mvpsih83aqgiur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1IY7A5OWFR8iXYYAbq4jzoC10nNzR8q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682651341371-f40evnvc0ici9tar36mvpsih83aqgiur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

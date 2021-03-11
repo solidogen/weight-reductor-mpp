@@ -1,4 +1,3 @@
-
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -25,6 +24,8 @@ gradle-app.setting
 /build
 /captures
 
+output-metadata.json
+*.apk
 
 *.xcworkspacedata
 *.xcuserstate
@@ -33,3 +34,9 @@ xcschememanagement.plist
 *.xcbkptlist
 
 **.hprof
+
+# Local Netlify folder
+.netlify
+
+/ci-variables.properties
+/environment.properties

@@ -1,8 +1,31 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
+import java.util.Properties
+
 plugins {
     kotlin("multiplatform")
     id("kotlinx-serialization")
     id("com.android.library")
     id("com.squareup.sqldelight")
+    id("com.codingfeline.buildkonfig")
+}
+
+/**
+ * Imitating Android's BuildConfig for other clients.
+ * Environment can be changed by running local deploy scripts or by CI
+ * */
+buildkonfig {
+    packageName = "com.spyrdonapps.weightreductor"
+    exposeObjectWithName = "JsBuildConfig"
+
+    val defaultEnvironment = "${RawEnvironment.Local}"
+    val environmentTag = "raw_environment"
+    val properties = Properties().apply {
+        file("../environment.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+    }
+    val overriddenEnvironment: String? = properties.getProperty(environmentTag)
+    defaultConfigs {
+        buildConfigField(Type.STRING, "RAW_ENVIRONMENT", overriddenEnvironment ?: defaultEnvironment)
+    }
 }
 
 android {
@@ -15,6 +38,16 @@ android {
         versionName = "0.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    // workaround for https://youtrack.jetbrains.com/issue/KT-43944
+    configurations {
+        create("androidTestApi")
+        create("androidTestDebugApi")
+        create("androidTestReleaseApi")
+        create("testApi")
+        create("testDebugApi")
+        create("testReleaseApi")
     }
 }
 
@@ -30,6 +63,9 @@ kotlin {
         compilations.all {
             kotlinOptions {
                 allWarningsAsErrors = true
+                freeCompilerArgs = listOf(
+                    "-Xopt-in=kotlin.RequiresOptIn"
+                )
             }
         }
     }
@@ -50,6 +86,10 @@ kotlin {
 
                 // Kotlinx Serialization
                 implementation(Serialization.core)
+                implementation(Serialization.json)
+
+                // Kotlinx Datetime
+                implementation(Deps.datetime)
 
                 // SQL Delight
                 implementation(SqlDelight.runtime)
