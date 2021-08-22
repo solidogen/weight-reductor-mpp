@@ -2,15 +2,16 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.0-alpha09")
+        // todo gradle doctor
+        classpath("com.android.tools.build:gradle:7.0.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
         classpath("com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}")
         classpath("com.google.gms:google-services:4.3.5")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.5.1")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.5.2")
         classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.7.0")
     }
 }
@@ -19,7 +20,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter()
+        maven(url = "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-js-wrappers")
         maven(url = "https://kotlin.bintray.com/kotlinx/")
         maven(url = "https://kotlin.bintray.com/kotlin-js-wrappers/")
         maven(url = "https://jitpack.io")

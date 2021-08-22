@@ -7,14 +7,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion(AndroidSdk.compile)
+    compileSdk = AndroidSdk.compile
     defaultConfig {
         applicationId = "com.spyrdonapps.weightreductor"
-        minSdkVersion(AndroidSdk.min)
-        targetSdkVersion(AndroidSdk.target)
-
-        versionCode = 1
-        versionName = "0.0.1"
+        minSdk = AndroidSdk.min
+        targetSdk = AndroidSdk.target
+        versionCode = 1 // todo move to buildSrc
+        versionName = "0.0.1" // todo move to buildSrc
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
@@ -62,7 +61,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        useIR = true
     }
 }
 
@@ -80,9 +78,9 @@ dependencies {
 
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
-    implementation("androidx.activity:activity-compose:1.3.0-alpha03")
+    implementation("androidx.activity:activity-compose:1.3.1")
 
-    implementation("com.google.android.material:material:1.3.0")
+    implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}")
@@ -98,7 +96,7 @@ dependencies {
     implementation(Compose.material)
     implementation(Compose.runtimeLiveData)
     implementation(Compose.navigation)
-    implementation(Compose.accompanist)
+    implementation(Compose.composeCoil)
 
     implementation(Koin.core)
     implementation(Koin.android)

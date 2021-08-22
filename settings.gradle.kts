@@ -10,8 +10,6 @@ pluginManagement {
 
 rootProject.name = "weight-reductor-mpp"
 
-enableFeaturePreview("GRADLE_METADATA")
-
 include(":common")
 include(":android")
 include(":backend")

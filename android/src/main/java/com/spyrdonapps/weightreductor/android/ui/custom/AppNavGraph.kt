@@ -5,7 +5,6 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.spyrdonapps.weightreductor.android.ui.features.home.HomeScreen
 import com.spyrdonapps.weightreductor.android.ui.features.login.LoginScreen
