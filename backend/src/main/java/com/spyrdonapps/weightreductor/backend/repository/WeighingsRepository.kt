@@ -1,7 +1,8 @@
 package com.spyrdonapps.weightreductor.backend.repository
 
+import com.spyrdonapps.common.model.*
+import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.weightreductor.backend.datasource.WeighingsDataSource
-import com.spyrdonapps.weightreductor.backend.deletelater.Weighing
 import kotlinx.datetime.Instant
 
 // todo - I can get rid of this class and operate on the datasource itself

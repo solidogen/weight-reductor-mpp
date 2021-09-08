@@ -3,7 +3,7 @@ package com.spyrdonapps.common.di
 import co.touchlab.kermit.Kermit
 import com.spyrdonapps.common.model.Environment
 import com.spyrdonapps.common.repository.WeighingRepository
-import com.spyrdonapps.common.repository.getLogger
+import com.spyrdonapps.common.getLogger
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
