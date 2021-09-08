@@ -1,4 +1,4 @@
-package com.spyrdonapps.weightreductor.android.ui.features.login
+package com.spyrdonapps.weightreductor.android.ui.features.register
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -12,15 +12,14 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import com.spyrdonapps.common.model.UserCredentials
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun LoginScreen(
-    goToRegisterScreen: () -> Unit,
-    loginRequested: (UserCredentials) -> Unit
+fun RegisterScreen(
+    goToLoginScreen: () -> Unit,
+    registerRequested: (UserCredentials) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -39,7 +38,7 @@ fun LoginScreen(
             val keyboardController = LocalSoftwareKeyboardController.current
 
             Text(
-                text = "Login",
+                text = "Register",
                 fontSize = 30.sp,
             )
             TextField(
@@ -64,18 +63,23 @@ fun LoginScreen(
                     .padding(top = 24.dp),
                 onClick = {
                     keyboardController?.hide()
-                    loginRequested.invoke(UserCredentials(username = username, password = password))
+                    registerRequested.invoke(
+                        UserCredentials(
+                            username = username,
+                            password = password
+                        )
+                    )
                 }
             ) {
-                Text(text = "Login")
+                Text(text = "Register")
             }
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 24.dp),
-                onClick = goToRegisterScreen
+                onClick = goToLoginScreen
             ) {
-                Text(text = "Don't have the account?")
+                Text(text = "Already have the account?")
             }
         }
     }
@@ -83,6 +87,6 @@ fun LoginScreen(
 
 @Preview
 @Composable
-fun LoginScreenPreview() {
-    LoginScreen(goToRegisterScreen = {}, loginRequested = {})
+fun RegisterScreenPreview() {
+    RegisterScreen(goToLoginScreen = {}, registerRequested = {})
 }

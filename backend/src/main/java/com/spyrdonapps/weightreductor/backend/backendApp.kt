@@ -5,6 +5,7 @@ import com.spyrdonapps.common.model.*
 import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
 import com.spyrdonapps.weightreductor.backend.di.backendModule
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
+import com.spyrdonapps.weightreductor.backend.routing.auth
 import com.spyrdonapps.weightreductor.backend.routing.weighings
 import com.spyrdonapps.weightreductor.backend.util.utils.AppRunMode
 import com.viartemev.ktor.flyway.FlywayFeature
@@ -118,6 +119,7 @@ fun Application.appModule(appRunMode: AppRunMode) {
             }
         }
         weighings(weighingsRepository)
+        auth()
     }
 
     if (!DatabaseSettings.hasJdbcUrlSet) {

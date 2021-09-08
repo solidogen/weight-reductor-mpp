@@ -1,15 +1,20 @@
 package com.spyrdonapps.weightreductor.android.ui.custom
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.spyrdonapps.weightreductor.android.ui.features.home.HomeScreen
 import com.spyrdonapps.weightreductor.android.ui.features.login.LoginScreen
+import com.spyrdonapps.weightreductor.android.ui.features.main.MainViewModel
 import com.spyrdonapps.weightreductor.android.ui.features.onboarding.OnboardingScreen
 import com.spyrdonapps.weightreductor.android.ui.features.register.RegisterScreen
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
 
 object AppDestinations {
     const val ONBOARDING_ROUTE = "onboarding"
@@ -36,22 +41,36 @@ class AppActions(navController: NavHostController) {
 @Composable
 fun AppNavGraph(startDestination: String = AppDestinations.ONBOARDING_ROUTE) {
     val navController = rememberNavController()
+    val viewModel: MainViewModel = getViewModel()
     val actions = remember(navController) { AppActions(navController) }
-    NavHost(
-        navController = navController,
-        startDestination = startDestination
+    val scaffoldState = rememberScaffoldState()
+    val errorState by viewModel.errorLiveData.observeAsState()
+    if (errorState?.hasBeenHandled == false) {
+        LaunchedEffect(key1 = errorState) {
+            errorState?.getContentIfNotHandled()?.let {
+                scaffoldState.snackbarHostState.showSnackbar(message = it)
+            }
+        }
+    }
+    Scaffold(
+        scaffoldState = scaffoldState
     ) {
-        composable(AppDestinations.ONBOARDING_ROUTE) {
-            OnboardingScreen(goToLoginScreen = actions.goToLoginScreen)
-        }
-        composable(AppDestinations.LOGIN_ROUTE) {
-            LoginScreen(goToRegisterScreen = actions.goToRegisterScreen, goToHomeScreen = actions.goToHomeScreen)
-        }
-        composable(AppDestinations.REGISTER_ROUTE) {
-            RegisterScreen(goToLoginScreen = actions.goToLoginScreen, goToHomeScreen = actions.goToHomeScreen)
-        }
-        composable(AppDestinations.HOME_ROUTE) {
-            HomeScreen(goToSettings = {  })
+        NavHost(
+            navController = navController,
+            startDestination = startDestination
+        ) {
+            composable(AppDestinations.ONBOARDING_ROUTE) {
+                OnboardingScreen(goToLoginScreen = actions.goToLoginScreen)
+            }
+            composable(AppDestinations.LOGIN_ROUTE) {
+                LoginScreen(goToRegisterScreen = actions.goToRegisterScreen, loginRequested = viewModel::loginRequested)
+            }
+            composable(AppDestinations.REGISTER_ROUTE) {
+                RegisterScreen(goToLoginScreen = actions.goToLoginScreen, registerRequested = viewModel::registerRequested)
+            }
+            composable(AppDestinations.HOME_ROUTE) {
+                HomeScreen(goToSettings = {  })
+            }
         }
     }
 }

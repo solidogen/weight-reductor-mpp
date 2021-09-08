@@ -2,6 +2,7 @@ package com.spyrdonapps.common.repository
 
 import com.spyrdonapps.common.model.ApiEndpoints
 import com.spyrdonapps.common.model.Environment
+import com.spyrdonapps.common.model.UserCredentials
 import com.spyrdonapps.common.model.Weighing
 import io.ktor.client.*
 import io.ktor.client.request.*
@@ -15,14 +16,30 @@ class WeighingRepository(
     // todo use ApiResponse/ApiResult wrapper (flow usecase)
 
     suspend fun getAllWeighings(): List<Weighing> =
-        client.get("$baseUrl/${ApiEndpoints.weighings}")
+        client.get("$baseUrl${ApiEndpoints.weighings}")
 
     suspend fun postWeighing(weighing: Weighing) = client.post<Unit> {
-        url("$baseUrl/${ApiEndpoints.weighingsAdd}")
+        url("$baseUrl${ApiEndpoints.weighingsAdd}")
         contentType(ContentType.Application.Json)
         body = weighing
     }
 
     suspend fun getWeighingById(id: Long): Weighing =
-        client.get("$baseUrl/${ApiEndpoints.weighings}/$id")
+        client.get("$baseUrl${ApiEndpoints.weighings}/$id")
+
+    suspend fun login(userCredentials: UserCredentials) {
+        client.post<Unit> {
+            url("$baseUrl${ApiEndpoints.login}")
+            contentType(ContentType.Application.Json)
+            body = userCredentials
+        }
+    }
+
+    suspend fun register(userCredentials: UserCredentials) {
+        client.post<Unit> {
+            url("$baseUrl${ApiEndpoints.register}")
+            contentType(ContentType.Application.Json)
+            body = userCredentials
+        }
+    }
 }

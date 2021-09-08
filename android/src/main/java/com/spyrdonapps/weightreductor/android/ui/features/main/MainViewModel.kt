@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Kermit
+import com.spyrdonapps.common.model.UserCredentials
 import com.spyrdonapps.common.model.Weighing
 import com.spyrdonapps.common.repository.WeighingRepository
 import com.spyrdonapps.weightreductor.android.util.Event
@@ -21,6 +22,28 @@ class MainViewModel(
 
     val weighingsLiveData: LiveData<List<Weighing>> get() = _weighingsLiveData
     val errorLiveData: LiveData<Event<String>> get() = _errorLiveData
+
+    fun loginRequested(userCredentials: UserCredentials) {
+        viewModelScope.launch {
+            try {
+                sampleClientRepository.login(userCredentials)
+            } catch (e: Exception) {
+                logger.e(e) { "Error trying to login" }
+                _errorLiveData.value = Event(e.message.orEmpty())
+            }
+        }
+    }
+
+    fun registerRequested(userCredentials: UserCredentials) {
+        viewModelScope.launch {
+            try {
+                sampleClientRepository.register(userCredentials)
+            } catch (e: Exception) {
+                logger.e(e) { "Error trying to register" }
+                _errorLiveData.value = Event(e.message.orEmpty())
+            }
+        }
+    }
 
     fun postWeighing() {
         viewModelScope.launch {

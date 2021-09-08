@@ -61,9 +61,7 @@ kotlin {
         compilations.all {
             kotlinOptions {
                 allWarningsAsErrors = true
-                freeCompilerArgs = listOf(
-                    "-Xopt-in=kotlin.RequiresOptIn"
-                )
+                freeCompilerArgs = freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
             }
         }
     }

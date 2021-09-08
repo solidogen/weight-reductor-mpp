@@ -22,6 +22,7 @@ import kotlinx.serialization.encoding.Encoder
 
 object ApiEndpoints {
     const val login = "/api/login"
+    const val register = "/api/register"
     const val weighings = "/api/weighings"
     const val weighingsAdd = "/api/weighings/add"
 }
@@ -72,6 +73,9 @@ data class ProductWithWeight(val product: Product, val meal: Meal, val weight: F
     val weightMultiplier: Float
         get() = weight / 100
 }
+
+@Serializable
+data class UserCredentials(val username: String, val password: String)
 
 object CalorieUtils {
 

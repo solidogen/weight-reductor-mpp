@@ -35,13 +35,17 @@ android {
     flavorDimensions("version")
     productFlavors {
         /**
-        * TODO find a way to connect physical device to locally hosted backend (not super important, emulator works fine for now)
-        * */
+         * TODO find a way to connect physical device to locally hosted backend (not super important, emulator works fine for now)
+         * */
         create("local") {
             applicationIdSuffix = ".local"
             versionNameSuffix = "-local"
             resValue("string", "app_name", "WR Local")
-            buildConfigField("String", "RAW_ENVIRONMENT", "\"${RawEnvironment.LocalAndroidEmulator}\"")
+            buildConfigField(
+                "String",
+                "RAW_ENVIRONMENT",
+                "\"${RawEnvironment.LocalAndroidEmulator}\""
+            )
         }
         create("dev") {
             applicationIdSuffix = ".dev"
@@ -67,8 +71,11 @@ android {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check",
-            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-Xallow-jvm-ir-dependencies",
+            "-Xskip-prerelease-check",
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-Xopt-in=kotlin.RequiresOptIn"
         )
     }
 }
