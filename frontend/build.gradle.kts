@@ -29,3 +29,10 @@ kotlin {
         binaries.executable()
     }
 }
+
+// todo - remove this when kotlin can be bumped to 1.5.30 (blocked by jetpack compose)
+afterEvaluate {
+    rootProject.extensions.configure<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension> {
+        versions.webpackDevServer.version = "4.0.0"
+    }
+}

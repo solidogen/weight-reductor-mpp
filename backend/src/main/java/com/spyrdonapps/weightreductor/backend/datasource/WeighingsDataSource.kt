@@ -13,6 +13,7 @@ interface WeighingsDataSource {
     suspend fun getAllWeighings(): List<Weighing>
     suspend fun upsert(weighing: Weighing)
     suspend fun getByDate(date: Instant): Weighing
+    suspend fun getById(id: Long): Weighing
     suspend fun deleteByDate(date: Instant)
 }
 
@@ -45,6 +46,17 @@ class ExposedWeighingsDataSource() : WeighingsDataSource {
             }
         }
     }
+
+    override suspend fun getById(id: Long): Weighing =
+        newSuspendedTransaction {
+            // there is no ids in table, just trying if query params work
+            return@newSuspendedTransaction WeighingsTable.selectAll().limit(1).map {
+                Weighing(
+                    weight = it[WeighingsTable.weight],
+                    date = it[WeighingsTable.date].toKotlinInstant()
+                )
+            }.first()
+        }
 
     override suspend fun getByDate(date: Instant): Weighing =
         newSuspendedTransaction {

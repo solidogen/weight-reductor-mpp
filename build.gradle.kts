@@ -6,12 +6,12 @@ buildscript {
     }
     dependencies {
         // todo gradle doctor
-        classpath("com.android.tools.build:gradle:7.0.1")
+        classpath("com.android.tools.build:gradle:7.0.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
         classpath("com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}")
-        classpath("com.google.gms:google-services:4.3.5")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.5.2")
+        classpath("com.google.gms:google-services:4.3.10")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.7.1")
         classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.7.0")
     }
 }
@@ -26,7 +26,6 @@ allprojects {
     tasks {
         withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
             kotlinOptions {
-                // todo useIR = true, also cleanup those declaration between modules
                 jvmTarget = "1.8"
             }
         }

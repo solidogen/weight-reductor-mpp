@@ -8,6 +8,9 @@ plugins {
 }
 
 dependencies {
+    // todo - this imports only androidMain in IDE, rest is considered errors (although gradle build works fine)
+    implementation(project(":common"))
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}")
 
     implementation(Deps.datetime)
@@ -39,9 +42,6 @@ dependencies {
 
     testImplementation(Koin.test)
     testImplementation("io.ktor:ktor-server-test-host:${Versions.ktor}")
-
-    // todo - this imports only androidMain in IDE, rest is considered errors (although gradle build works fine)
-    implementation(project(":common"))
 }
 
 application {

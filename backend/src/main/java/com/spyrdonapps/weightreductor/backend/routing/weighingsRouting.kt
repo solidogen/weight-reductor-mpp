@@ -12,56 +12,37 @@ import io.ktor.routing.*
 import kotlinx.datetime.Instant
 
 fun Route.weighings(repository: WeighingsRepository) {
-
-    location<WeighingLocation> {
-        get {
-            call.respond(repository.getAllWeighings())
+    get(ApiEndpoints.weighings) {
+        call.respond(repository.getAllWeighings())
+    }
+    get("${ApiEndpoints.weighings}/{id}") {
+        val id = call.parameters["id"] ?: error("No id provided")
+        call.respond(repository.getById(id.toLong()))
+    }
+    post(ApiEndpoints.weighingsAdd) {
+        val weighing = call.receive<Weighing>()
+        repository.upsert(weighing)
+        call.respond(HttpStatusCode.OK)
+    }
+    delete("${ApiEndpoints.weighings}/{date}") {
+        val dateParam = call.parameters["date"] ?: run {
+            call.respond(
+                HttpStatusCode.BadRequest,
+                "No date received"
+            )
+            return@delete
         }
-        get("/{date}") {
-            val dateParam = call.parameters["date"] ?: run {
-                call.respond(
-                    HttpStatusCode.BadRequest,
-                    "No date received"
-                )
-                return@get
-            }
-            val date: Instant
-            try {
-                date = Instant.parse(dateParam)
-            } catch (e: Exception) {
-                call.respond(
-                    HttpStatusCode.BadRequest,
-                    "Wrong date format"
-                )
-                return@get
-            }
-            call.respond(repository.getByDate(date))
+        val date: Instant
+        try {
+            date = Instant.parse(dateParam)
+        } catch (e: Exception) {
+            call.respond(
+                HttpStatusCode.BadRequest,
+                "Wrong date format"
+            )
+            return@delete
         }
-        post {
-            val weighing = call.receive<Weighing>()
-            repository.upsert(weighing)
-            call.respond(HttpStatusCode.OK)
-        }
-        delete("/{date}") {
-            val dateParam = call.parameters["date"] ?: run {
-                call.respond(
-                    HttpStatusCode.BadRequest,
-                    "No date received"
-                )
-                return@delete
-            }
-            val date: Instant
-            try {
-                date = Instant.parse(dateParam)
-            } catch (e: Exception) {
-                call.respond(
-                    HttpStatusCode.BadRequest,
-                    "Wrong date format"
-                )
-                return@delete
-            }
-            repository.deleteByDate(date)
-            call.respond(HttpStatusCode.OK)
-        }
+        repository.deleteByDate(date)
+        call.respond(HttpStatusCode.OK)
     }
 }

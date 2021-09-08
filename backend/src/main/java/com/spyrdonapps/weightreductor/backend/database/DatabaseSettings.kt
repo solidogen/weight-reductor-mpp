@@ -9,7 +9,6 @@ import javax.sql.DataSource
 
 object DatabaseSettings : KoinComponent {
 
-    // todo - enable h2 database for easy startup without postgres setup
     private val remoteJdbcUrl: String?
         get() = System.getenv("JDBC_DATABASE_URL")
 
@@ -18,6 +17,8 @@ object DatabaseSettings : KoinComponent {
 
     lateinit var database: Database
         private set
+
+    val hasJdbcUrlSet = remoteJdbcUrl != null
 
     fun init(appRunMode: AppRunMode) {
         dataSource = createDataSource(appRunMode)

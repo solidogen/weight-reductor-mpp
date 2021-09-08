@@ -1,5 +1,6 @@
 object Versions {
     // todo move ALL versions from all modules here
+    // todo ben manes plugin
 
     const val kotlin = "1.5.21"
     const val kotlinCoroutines = "1.5.1-native-mt"

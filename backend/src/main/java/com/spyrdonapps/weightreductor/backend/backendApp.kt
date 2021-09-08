@@ -1,5 +1,7 @@
 package com.spyrdonapps.weightreductor.backend
 
+import com.spyrdonapps.common.devonly.*
+import com.spyrdonapps.common.model.*
 import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
 import com.spyrdonapps.weightreductor.backend.di.backendModule
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
@@ -17,18 +19,15 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
 import org.koin.ktor.ext.Koin
 import org.koin.ktor.ext.inject
 import org.koin.logger.SLF4JLogger
 import org.slf4j.event.Level
-
-/**
- * Not able to use DI or any class in common module here (AGP doesn't work well with multiplatform).
- * Any common data classes will be temporarily duplicated in 2 files named [DUPLICATES] in backend module AND common module.
- * */
-/**
-* TODO share only dtos on common, platform-specific stuff in client-common, so I have only commonMain
-* */
 
 fun main() {
     embeddedServer(
@@ -119,5 +118,11 @@ fun Application.appModule(appRunMode: AppRunMode) {
             }
         }
         weighings(weighingsRepository)
+    }
+
+    if (!DatabaseSettings.hasJdbcUrlSet) {
+        GlobalScope.launch {
+            weighingsRepository.upsert(Weighing(85f, LocalDate.parse("2020-02-02").atStartOfDayIn(TimeZone.UTC)))
+        }
     }
 }

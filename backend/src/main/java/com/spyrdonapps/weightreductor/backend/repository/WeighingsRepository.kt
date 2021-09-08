@@ -12,5 +12,6 @@ class WeighingsRepository(private val weighingsDataSource: WeighingsDataSource) 
     suspend fun getAllWeighings(): List<Weighing> = weighingsDataSource.getAllWeighings()
     suspend fun upsert(weighing: Weighing) = weighingsDataSource.upsert(weighing)
     suspend fun getByDate(date: Instant): Weighing = weighingsDataSource.getByDate(date)
+    suspend fun getById(id: Long): Weighing = weighingsDataSource.getById(id)
     suspend fun deleteByDate(date: Instant) = weighingsDataSource.deleteByDate(date)
 }
