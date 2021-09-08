@@ -60,7 +60,6 @@ class SchemaValidationTest : KoinTest {
      * */
     @Test
     fun testSchemaValidationAfterMigrations() {
-        // todo fix, broke after adding h2 or after making dependency updates
         if (CiVariables.isCiBuild) {
             // don't break the build if Github CI
             println("CI build detected, skipping schema validation")
