@@ -19,11 +19,11 @@ import react.dom.label
 import styled.css
 import styled.styledButton
 
-external interface AddToListFormProps : RProps {
+external interface AddToListFormProps : Props {
     var addToList: (String) -> Unit
 }
 
-external interface AddToListFormState : RState {
+external interface AddToListFormState : State {
     var inputText: String
 }
 
@@ -84,7 +84,7 @@ class AddToListForm : RComponent<AddToListFormProps, AddToListFormState>() {
     }
 }
 
-fun RBuilder.addToListForm(handler: AddToListFormProps.() -> Unit): ReactElement {
+fun RBuilder.addToListForm(handler: AddToListFormProps.() -> Unit) {
     return child(AddToListForm::class) {
         this.attrs(handler)
     }

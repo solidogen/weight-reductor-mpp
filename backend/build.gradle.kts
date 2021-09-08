@@ -2,7 +2,7 @@ import java.util.Properties
 import java.io.FileWriter
 
 plugins {
-    id("kotlin-platform-jvm")
+    kotlin("jvm")
     application
     kotlin("plugin.serialization")
 }
@@ -33,6 +33,7 @@ dependencies {
 
     implementation("org.postgresql:postgresql:${Versions.postgres}")
     implementation("com.zaxxer:HikariCP:4.0.2")
+    implementation ("com.h2database:h2:1.4.200")
     implementation("org.flywaydb:flyway-core:7.5.3")
     implementation("com.viartemev:ktor-flyway-feature:1.3.0")
 

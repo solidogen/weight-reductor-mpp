@@ -26,6 +26,10 @@ import org.slf4j.event.Level
  * Not able to use DI or any class in common module here (AGP doesn't work well with multiplatform).
  * Any common data classes will be temporarily duplicated in 2 files named [DUPLICATES] in backend module AND common module.
  * */
+/**
+* TODO share only dtos on common, platform-specific stuff in client-common, so I have only commonMain
+* */
+
 fun main() {
     embeddedServer(
         Netty,
@@ -33,7 +37,7 @@ fun main() {
         module = {
             appModule(AppRunMode.Default)
         },
-        watchPaths = listOf("backend") // todo - this doesn't recompile BE
+        watchPaths = listOf("com.spyrdonapps.weightreductor.backend") // todo - this doesn't recompile BE
     ).start(wait = true)
 }
 

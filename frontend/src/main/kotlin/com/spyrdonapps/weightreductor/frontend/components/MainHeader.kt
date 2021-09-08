@@ -7,7 +7,7 @@ import styled.css
 import styled.styledH1
 import styled.styledHeader
 
-class MainHeader : RComponent<RProps, RState>() {
+class MainHeader : RComponent<Props, State>() {
 
     override fun RBuilder.render() {
         styledHeader {
@@ -27,7 +27,7 @@ class MainHeader : RComponent<RProps, RState>() {
     }
 }
 
-fun RBuilder.mainHeader(handler: RProps.() -> Unit): ReactElement {
+fun RBuilder.mainHeader(handler: Props.() -> Unit) {
     return child(MainHeader::class) {
         this.attrs(handler)
     }

@@ -7,11 +7,11 @@ import react.dom.p
 import styled.css
 import styled.styledP
 
-external interface SimpleListProps : RProps {
+external interface SimpleListProps : Props {
     var list: List<String>
 }
 
-class SimpleList : RComponent<SimpleListProps, RState>() {
+class SimpleList : RComponent<SimpleListProps, State>() {
 
     override fun RBuilder.render() {
         props.list.forEach { listItem ->
@@ -27,7 +27,7 @@ class SimpleList : RComponent<SimpleListProps, RState>() {
     }
 }
 
-fun RBuilder.simpleList(handler: SimpleListProps.() -> Unit): ReactElement {
+fun RBuilder.simpleList(handler: SimpleListProps.() -> Unit) {
     return child(SimpleList::class) {
         this.attrs(handler)
     }

@@ -9,6 +9,7 @@ import javax.sql.DataSource
 
 object DatabaseSettings : KoinComponent {
 
+    // todo - enable h2 database for easy startup without postgres setup
     private val remoteJdbcUrl: String?
         get() = System.getenv("JDBC_DATABASE_URL")
 
@@ -30,7 +31,7 @@ object DatabaseSettings : KoinComponent {
             }
         } else {
             val url = when (appRunMode) {
-                AppRunMode.Default -> "jdbc:postgresql:weightreductor?user=postgres"
+                AppRunMode.Default -> "jdbc:h2:mem:test" // "jdbc:postgresql:weightreductor?user=postgres" TODO read option from script variable
                 AppRunMode.UnitTesting -> "jdbc:postgresql:weightreductorunittests?user=postgres"
             }
             HikariConfig().apply {

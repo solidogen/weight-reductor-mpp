@@ -4,7 +4,7 @@ import kotlinx.css.*
 import styled.injectGlobal
 
 fun normalizeCss() {
-    val styles = CSSBuilder().apply {
+    val styles = CssBuilder().apply {
         body {
             margin(0.px)
             padding(0.px)

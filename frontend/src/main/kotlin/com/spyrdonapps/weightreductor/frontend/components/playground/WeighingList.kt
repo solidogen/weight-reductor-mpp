@@ -23,13 +23,13 @@ import styled.css
 import styled.styledButton
 import styled.styledDiv
 
-external interface WeighingListState : RState {
+external interface WeighingListState : State {
     var list: List<Weighing>
     var shouldGetWeighings: Boolean
     var weighingToPost: Weighing?
 }
 
-class WeighingList : RComponent<RProps, WeighingListState>() {
+class WeighingList : RComponent<Props, WeighingListState>() {
 
     override fun WeighingListState.init() {
         list = emptyList()
@@ -64,6 +64,7 @@ class WeighingList : RComponent<RProps, WeighingListState>() {
             }
         }
         state.weighingToPost?.let { weighing ->
+            // todo inject mainScope
             val mainScope = MainScope()
             mainScope.launch {
                 try {
@@ -125,7 +126,7 @@ class WeighingList : RComponent<RProps, WeighingListState>() {
     }
 }
 
-fun RBuilder.weighingsList(handler: RProps.() -> Unit): ReactElement {
+fun RBuilder.weighingsList(handler: Props.() -> Unit) {
     return child(WeighingList::class) {
         this.attrs(handler)
     }

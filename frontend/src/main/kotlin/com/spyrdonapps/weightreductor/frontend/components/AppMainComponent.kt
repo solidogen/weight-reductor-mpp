@@ -1,19 +1,20 @@
 package com.spyrdonapps.weightreductor.frontend.components
 
+import com.spyrdonapps.weightreductor.frontend.components.playground.playground
 import com.spyrdonapps.weightreductor.frontend.components.playground.weighingsList
 import react.*
 
-class AppMainComponent : RComponent<RProps, RState>() {
+class AppMainComponent : RComponent<Props, State>() {
 
     override fun RBuilder.render() {
         mainHeader { }
         // todo rest of main layout
         weighingsList { }
-//        playground { }
+        playground { }
     }
 }
 
-fun RBuilder.appMainComponent(handler: RProps.() -> Unit): ReactElement {
+fun RBuilder.appMainComponent(handler: Props.() -> Unit) {
     return child(AppMainComponent::class) {
         this.attrs(handler)
     }

@@ -4,11 +4,11 @@ import react.*
 import react.dom.h1
 import react.dom.h2
 
-external interface PlaygroundState : RState {
+external interface PlaygroundState : State {
     var list: List<String>
 }
 
-class Playground : RComponent<RProps, PlaygroundState>() {
+class Playground : RComponent<Props, PlaygroundState>() {
 
     override fun PlaygroundState.init() {
         list = listOf("simple item 1", "simple item 2")
@@ -34,7 +34,7 @@ class Playground : RComponent<RProps, PlaygroundState>() {
     }
 }
 
-fun RBuilder.playground(handler: RProps.() -> Unit): ReactElement {
+fun RBuilder.playground(handler: Props.() -> Unit) {
     return child(Playground::class) {
         this.attrs(handler)
     }
