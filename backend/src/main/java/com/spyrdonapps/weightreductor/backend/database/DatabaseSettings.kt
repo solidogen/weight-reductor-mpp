@@ -32,8 +32,9 @@ object DatabaseSettings : KoinComponent {
             }
         } else {
             val url = when (appRunMode) {
-                AppRunMode.Default -> "jdbc:h2:mem:test" // "jdbc:postgresql:weightreductor?user=postgres" TODO read option from script variable
-                AppRunMode.UnitTesting -> "jdbc:postgresql:weightreductorunittests?user=postgres"
+                // TODO read option from script variable and restore some of those
+                AppRunMode.Default -> "jdbc:h2:mem:test" // "jdbc:postgresql:weightreductor?user=postgres"
+                AppRunMode.UnitTesting -> "jdbc:h2:mem:test" // "jdbc:postgresql:weightreductorunittests?user=postgres"
             }
             HikariConfig().apply {
                 jdbcUrl = url

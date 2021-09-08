@@ -1,22 +1,22 @@
+@file:Suppress("UnusedImport")
+
 package com.spyrdonapps.weightreductor.backend.routing
 
 import com.spyrdonapps.common.model.*
 import com.spyrdonapps.common.devonly.*
+import com.spyrdonapps.weightreductor.backend.repository.UsersRepository
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-var users = mutableListOf<UserCredentials>().apply {
-    add(UserCredentials("user1", "ooooo"))
-}
-
-fun Route.auth() {
+fun Route.auth(usersRepository: UsersRepository) {
     post(ApiEndpoints.login) {
         // todo request object
         val userCredentials: UserCredentials = call.receive()
-        if (users.contains(userCredentials)) {
+        if (usersRepository.checkCredentials(userCredentials)) {
+//            val tokenData todo
             call.respond(HttpStatusCode.OK)
         } else {
             call.respond(HttpStatusCode.Forbidden, "Wrong credentials")
@@ -25,11 +25,9 @@ fun Route.auth() {
     post(ApiEndpoints.register) {
         // todo request object
         val userCredentials: UserCredentials = call.receive()
-        if (users.map { it.username }.contains(userCredentials.username)) {
-            call.respond(HttpStatusCode.Conflict, "Username already exists")
-        } else {
-            users.add(userCredentials)
-            call.respond(HttpStatusCode.OK)
-        }
+        usersRepository.register(userCredentials)
+        // handle conflict?
+        //  val tokenData todo
+        call.respond(HttpStatusCode.OK)
     }
 }

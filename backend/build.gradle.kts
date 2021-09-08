@@ -34,6 +34,7 @@ dependencies {
     implementation ("com.h2database:h2:1.4.200")
     implementation("org.flywaydb:flyway-core:7.5.3")
     implementation("com.viartemev:ktor-flyway-feature:1.3.0")
+    implementation("at.favre.lib:bcrypt:0.9.0")
 
     implementation("org.jetbrains.exposed:exposed-core:${Versions.exposed}")
     implementation("org.jetbrains.exposed:exposed-dao:${Versions.exposed}")

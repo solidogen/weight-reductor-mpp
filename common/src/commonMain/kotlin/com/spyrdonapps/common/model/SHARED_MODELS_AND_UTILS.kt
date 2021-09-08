@@ -77,6 +77,9 @@ data class ProductWithWeight(val product: Product, val meal: Meal, val weight: F
 @Serializable
 data class UserCredentials(val username: String, val password: String)
 
+@Serializable
+data class TokenData(val accessToken: String, val refreshToken: String)
+
 object CalorieUtils {
 
     private const val kcalPerProteinGram = 4

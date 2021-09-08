@@ -1,7 +1,9 @@
+@file:Suppress("UnusedImport")
+
 package com.spyrdonapps.weightreductor.backend.repository
 
-import com.spyrdonapps.common.model.*
 import com.spyrdonapps.common.devonly.*
+import com.spyrdonapps.common.model.*
 import com.spyrdonapps.weightreductor.backend.datasource.WeighingsDataSource
 import kotlinx.datetime.Instant
 
@@ -9,7 +11,6 @@ import kotlinx.datetime.Instant
 //  also client Repository has almost the same name and methods
 //  IDEA: common interface for both repositories
 class WeighingsRepository(private val weighingsDataSource: WeighingsDataSource) {
-
     suspend fun getAllWeighings(): List<Weighing> = weighingsDataSource.getAllWeighings()
     suspend fun upsert(weighing: Weighing) = weighingsDataSource.upsert(weighing)
     suspend fun getByDate(date: Instant): Weighing = weighingsDataSource.getByDate(date)

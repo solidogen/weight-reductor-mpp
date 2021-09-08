@@ -1,9 +1,12 @@
+@file:Suppress("UnusedImport")
+
 package com.spyrdonapps.weightreductor.backend
 
 import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.common.model.*
 import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
 import com.spyrdonapps.weightreductor.backend.di.backendModule
+import com.spyrdonapps.weightreductor.backend.repository.UsersRepository
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
 import com.spyrdonapps.weightreductor.backend.routing.auth
 import com.spyrdonapps.weightreductor.backend.routing.weighings
@@ -106,6 +109,7 @@ fun Application.appModule(appRunMode: AppRunMode) {
     }
 
     val weighingsRepository: WeighingsRepository by inject()
+    val usersRepository: UsersRepository by inject()
 
     routing {
         get("/") {
@@ -119,7 +123,7 @@ fun Application.appModule(appRunMode: AppRunMode) {
             }
         }
         weighings(weighingsRepository)
-        auth()
+        auth(usersRepository)
     }
 
     if (!DatabaseSettings.hasJdbcUrlSet) {

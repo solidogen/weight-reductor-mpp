@@ -1,7 +1,9 @@
+@file:Suppress("UnusedImport")
+
 package com.spyrdonapps.weightreductor.backend.datasource
 
-import com.spyrdonapps.common.model.*
 import com.spyrdonapps.common.devonly.*
+import com.spyrdonapps.common.model.*
 import com.spyrdonapps.weightreductor.backend.database.tables.WeighingsTable
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toJavaInstant
@@ -17,7 +19,7 @@ interface WeighingsDataSource {
     suspend fun deleteByDate(date: Instant)
 }
 
-class ExposedWeighingsDataSource() : WeighingsDataSource {
+class ExposedWeighingsDataSource : WeighingsDataSource {
 
     override suspend fun getAllWeighings(): List<Weighing> =
         newSuspendedTransaction {
@@ -49,8 +51,8 @@ class ExposedWeighingsDataSource() : WeighingsDataSource {
 
     override suspend fun getById(id: Long): Weighing =
         newSuspendedTransaction {
-            // there is no ids in table, just trying if query params work
-            return@newSuspendedTransaction WeighingsTable.selectAll().limit(1).map {
+            return@newSuspendedTransaction WeighingsTable.selectAll()
+                .filter { it[WeighingsTable.id].value == id }.map {
                 Weighing(
                     weight = it[WeighingsTable.weight],
                     date = it[WeighingsTable.date].toKotlinInstant()

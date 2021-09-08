@@ -1,3 +1,5 @@
+@file:Suppress("UnusedImport")
+
 package schema
 
 import com.spyrdonapps.weightreductor.backend.CiVariables
@@ -6,6 +8,7 @@ import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
 import com.spyrdonapps.common.model.*
 import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.weightreductor.backend.di.backendModule
+import com.spyrdonapps.weightreductor.backend.repository.UsersRepository
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
 import com.spyrdonapps.weightreductor.backend.util.extensions.isCiBuild
 import com.spyrdonapps.weightreductor.backend.util.utils.AppRunMode
@@ -26,7 +29,9 @@ import kotlin.test.assertEquals
 
 class SchemaValidationTest : KoinTest {
 
-    private val repo: WeighingsRepository by inject()
+    private val weighingsRepository: WeighingsRepository by inject()
+    private val usersRepository: UsersRepository by inject()
+//    private val refreshTokensRepository: RefreshTokensRepository by inject() // todo test
 
     @Before
     fun before() {
@@ -56,41 +61,45 @@ class SchemaValidationTest : KoinTest {
     @Test
     fun testSchemaValidationAfterMigrations() {
         // todo fix, broke after adding h2 or after making dependency updates
-//        if (CiVariables.isCiBuild) {
-//            // don't break the build if Github CI
-//            println("CI build detected, skipping schema validation")
-//            return
-//        }
-//        println("Local build detected, validating database schema. " +
-//                "If this is not a local build, CI didn't run generateCiVariables.sh script.")
-//        withTestApplication({
-//            appModule(appRunMode = AppRunMode.UnitTesting)
-//        }) {
-//            runBlocking {
-//                val currentlyValidatedTables = listOf("flyway_schema_history", "weighings")
-//
-//                // Testing weighings table schema
-//                repo.upsert(Weighing(weight = 40f, date = Instant.DISTANT_FUTURE))
-//                val weighings = repo.getAllWeighings()
-//                assert(weighings.isNotEmpty())
-//
-//                /**
-//                 * Checking if all existing tables are actually being validated.
-//                 * If I add a table and do not add it to the [currentlyValidatedTables] this will break.
-//                 **/
-//                transaction {
-//                    val schema = DatabaseSettings.dataSource.connection.schema
-//                    val databaseTableNames = DatabaseSettings.database.dialect.allTablesNames()
-//                        .map { it.removePrefix("$schema.") }
-//                    assertEquals(
-//                        expected = currentlyValidatedTables,
-//                        actual = databaseTableNames,
-//                        message = "Not all tables are validated in schema validation process, " +
-//                                "please add missing tables: ${databaseTableNames - currentlyValidatedTables}\n"
-//                    )
-//                    println("All tables were successfully validated")
-//                }
-//            }
-//        }
+        if (CiVariables.isCiBuild) {
+            // don't break the build if Github CI
+            println("CI build detected, skipping schema validation")
+            return
+        }
+        println("Local build detected, validating database schema. " +
+                "If this is not a local build, CI didn't run generateCiVariables.sh script.")
+        withTestApplication({
+            appModule(appRunMode = AppRunMode.UnitTesting)
+        }) {
+            runBlocking {
+                val currentlyValidatedTables = listOf("flyway_schema_history", "weighings", "users", "refresh_tokens")
+
+                // Testing weighings table schema
+                weighingsRepository.upsert(Weighing(weight = 40f, date = Instant.DISTANT_FUTURE))
+                val weighings = weighingsRepository.getAllWeighings()
+                assert(weighings.isNotEmpty())
+
+                val testUserCredentials = UserCredentials(username = "asd", password = "zxc")
+                usersRepository.register(testUserCredentials)
+                assert(usersRepository.checkCredentials(testUserCredentials))
+
+                /**
+                 * Checking if all existing tables are actually being validated.
+                 * If I add a table and do not add it to the [currentlyValidatedTables] this will break.
+                 **/
+                transaction {
+                    val schema = DatabaseSettings.dataSource.connection.schema
+                    val databaseTableNames = DatabaseSettings.database.dialect.allTablesNames()
+                        .map { it.removePrefix("$schema.") }
+                    assertEquals(
+                        expected = currentlyValidatedTables.map { it.lowercase() }.sorted(),
+                        actual = databaseTableNames.map { it.lowercase() }.sorted(),
+                        message = "Not all tables are validated in schema validation process, " +
+                                "please add missing tables: ${databaseTableNames - currentlyValidatedTables}\n"
+                    )
+                    println("All tables were successfully validated")
+                }
+            }
+        }
     }
 }

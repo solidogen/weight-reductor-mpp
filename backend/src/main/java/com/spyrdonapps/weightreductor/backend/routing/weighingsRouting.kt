@@ -1,3 +1,5 @@
+@file:Suppress("UnusedImport")
+
 package com.spyrdonapps.weightreductor.backend.routing
 
 import com.spyrdonapps.common.model.*
