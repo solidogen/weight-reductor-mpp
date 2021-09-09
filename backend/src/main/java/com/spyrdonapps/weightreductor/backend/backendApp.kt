@@ -47,8 +47,6 @@ fun main() {
     ).start(wait = true)
 }
 
-const val BASIC_AUTH_KEY = "BASIC_AUTH_KEY"
-
 fun Application.appModule(appRunMode: AppRunMode) {
     install(DefaultHeaders)
     install(Locations)
@@ -122,8 +120,17 @@ fun Application.appModule(appRunMode: AppRunMode) {
     val requestValidator: RequestValidator by inject()
 
     routing {
+        fun allRoutes(root: Route): List<Route> {
+            return listOf(root) + root.children.flatMap { allRoutes(it) }
+        }
         get("/") {
             call.respond("API alive")
+        }
+        get("/routes") {
+            val root = feature(Routing)
+            val allRoutes = allRoutes(root)
+            val allRoutesWithMethod = allRoutes.filter { it.selector is HttpMethodRouteSelector }
+            call.respond(allRoutesWithMethod.joinToString("\n"))
         }
         weighings(weighingsRepository)
         auth(usersRepository, requestValidator)
