@@ -3,7 +3,7 @@ package com.spyrdonapps.weightreductor.frontend
 import co.touchlab.kermit.Kermit
 import com.spyrdonapps.common.di.initKoin
 import com.spyrdonapps.common.model.Environment
-import com.spyrdonapps.common.repository.WeighingRepository
+import com.spyrdonapps.common.repository.ClientRepository
 import com.spyrdonapps.common.clientType
 import com.spyrdonapps.weightreductor.JsBuildConfig
 import com.spyrdonapps.weightreductor.frontend.components.appMainComponent
@@ -14,7 +14,7 @@ import react.createContext
 import react.dom.render
 
 object AppDependencies : KoinComponent {
-    val repository: WeighingRepository
+    val repository: ClientRepository
     val logger: Kermit
 
     init {

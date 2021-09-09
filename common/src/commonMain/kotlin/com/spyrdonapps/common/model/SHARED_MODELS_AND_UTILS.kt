@@ -21,8 +21,9 @@ import kotlinx.serialization.encoding.Encoder
  * */
 
 object ApiEndpoints {
-    const val login = "/api/login"
-    const val register = "/api/register"
+    const val login = "/api/auth/login"
+    const val register = "/api/auth/register"
+    const val refreshToken = "/api/auth/refreshtoken"
     const val weighings = "/api/weighings"
     const val weighingsAdd = "/api/weighings/add"
 }
@@ -79,6 +80,9 @@ data class UserCredentials(val username: String, val password: String)
 
 @Serializable
 data class TokenData(val accessToken: String, val refreshToken: String)
+
+@Serializable
+data class RefreshTokenRequest(val refreshToken: String)
 
 object CalorieUtils {
 

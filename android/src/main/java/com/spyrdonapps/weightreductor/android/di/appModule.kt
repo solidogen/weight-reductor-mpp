@@ -5,5 +5,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModel { MainViewModel(sampleClientRepository = get(), logger = get()) }
+    viewModel { MainViewModel(repository = get(), logger = get()) }
 }

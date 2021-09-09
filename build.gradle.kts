@@ -1,3 +1,11 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import com.osacky.doctor.DoctorExtension
+
+plugins {
+    id("com.github.ben-manes.versions") version "0.39.0" // run scripts/checkForDependencyUpdates.sh to list all available updates
+    id("com.osacky.doctor") version "0.7.0" // gives hints how to speed-up builds
+}
+
 buildscript {
     repositories {
         google()
@@ -13,6 +21,7 @@ buildscript {
         classpath("com.google.gms:google-services:4.3.10")
         classpath("com.google.firebase:firebase-crashlytics-gradle:2.7.1")
         classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.7.0")
+        classpath("app.cash.licensee:licensee-gradle-plugin:1.2.0")
     }
 }
 
@@ -30,6 +39,30 @@ allprojects {
             }
         }
     }
+}
+
+configure<DoctorExtension> {
+    javaHome {
+        failOnError.set(false)
+    }
+}
+
+tasks.withType<DependencyUpdatesTask> {
+    // show only stable version of gradle
+    gradleReleaseChannel = "current"
+    rejectVersionIf {
+        // show only stable versions
+        isNonStable(candidate.version) &&
+                // hide warnings for current unstable versions
+                !isNonStable(currentVersion)
+    }
+}
+
+fun isNonStable(version: String): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(version)
+    return isStable.not()
 }
 
 // todo new syntax like in backend build.gradle

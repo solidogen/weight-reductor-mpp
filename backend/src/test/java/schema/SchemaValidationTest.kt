@@ -80,7 +80,7 @@ class SchemaValidationTest : KoinTest {
 
                 val testUserCredentials = UserCredentials(username = "asd", password = "zxc")
                 usersRepository.register(testUserCredentials)
-                assert(usersRepository.checkCredentials(testUserCredentials))
+                assert(usersRepository.checkCredentials(testUserCredentials) >= 0)
 
                 /**
                  * Checking if all existing tables are actually being validated.

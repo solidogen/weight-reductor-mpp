@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.Properties
 import java.io.FileWriter
 
@@ -19,6 +20,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:${Versions.ktor}")
     implementation("io.ktor:ktor-serialization:${Versions.ktor}")
     implementation("io.ktor:ktor-auth:${Versions.ktor}")
+    implementation("io.ktor:ktor-auth-jwt:${Versions.ktor}")
     implementation("io.ktor:ktor-locations:${Versions.ktor}")
 
     implementation(Koin.ktor)
@@ -35,6 +37,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core:7.5.3")
     implementation("com.viartemev:ktor-flyway-feature:1.3.0")
     implementation("at.favre.lib:bcrypt:0.9.0")
+    implementation("com.auth0:java-jwt:3.18.1")
 
     implementation("org.jetbrains.exposed:exposed-core:${Versions.exposed}")
     implementation("org.jetbrains.exposed:exposed-dao:${Versions.exposed}")
@@ -56,6 +59,11 @@ kotlin {
 }
 
 tasks {
+    withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
+        }
+    }
     val generateCiVariables by registering {
         val isCiBuildKey = "IS_CI_BUILD"
         group = "codegen"

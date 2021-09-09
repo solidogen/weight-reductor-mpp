@@ -6,6 +6,7 @@ import com.spyrdonapps.common.model.*
 import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
 import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.http.*
 import io.ktor.locations.*
 import io.ktor.request.*
@@ -21,10 +22,12 @@ fun Route.weighings(repository: WeighingsRepository) {
         val id = call.parameters["id"] ?: error("No id provided")
         call.respond(repository.getById(id.toLong()))
     }
-    post(ApiEndpoints.weighingsAdd) {
-        val weighing = call.receive<Weighing>()
-        repository.upsert(weighing)
-        call.respond(HttpStatusCode.OK)
+    authenticate {
+        post(ApiEndpoints.weighingsAdd) {
+            val weighing = call.receive<Weighing>()
+            repository.upsert(weighing)
+            call.respond(HttpStatusCode.OK)
+        }
     }
     delete("${ApiEndpoints.weighings}/{date}") {
         val dateParam = call.parameters["date"] ?: run {

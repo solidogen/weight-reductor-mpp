@@ -2,10 +2,12 @@ package com.spyrdonapps.common.di
 
 import co.touchlab.kermit.Kermit
 import com.spyrdonapps.common.model.Environment
-import com.spyrdonapps.common.repository.WeighingRepository
+import com.spyrdonapps.common.repository.ClientRepository
 import com.spyrdonapps.common.getLogger
 import io.ktor.client.*
 import io.ktor.client.features.*
+import io.ktor.client.features.auth.*
+import io.ktor.client.features.auth.providers.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
@@ -34,7 +36,7 @@ fun commonModule(enableNetworkLogs: Boolean, environment: Environment) = module 
     single { createJson() }
     single { Kermit(getLogger()) }
     single { createHttpClient(json = get(), enableNetworkLogs = enableNetworkLogs, kermit = get()) }
-    single { WeighingRepository(client = get(), environment = get()) }
+    single { ClientRepository(client = get(), environment = get()) }
 }
 
 fun createJson() = Json { isLenient = true; ignoreUnknownKeys = true }
@@ -49,6 +51,14 @@ fun createHttpClient(json: Json, enableNetworkLogs: Boolean, kermit: Kermit) = H
             contentType(ContentType.Application.Json)
         }
     }
+    // todo - install some refresh token logic. no idea what I'm doing here
+//    install(Auth) {
+//        bearer {
+//            refreshTokens {
+//
+//            }
+//        }
+//    }
     if (enableNetworkLogs) {
         install(Logging) {
             logger = object : Logger {
@@ -56,7 +66,7 @@ fun createHttpClient(json: Json, enableNetworkLogs: Boolean, kermit: Kermit) = H
                     kermit.d { message }
                 }
             }
-            level = LogLevel.HEADERS
+            level = LogLevel.ALL
         }
     }
 }

@@ -2,6 +2,8 @@
 
 package com.spyrdonapps.weightreductor.backend
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
 import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.common.model.*
 import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
@@ -10,10 +12,11 @@ import com.spyrdonapps.weightreductor.backend.repository.UsersRepository
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
 import com.spyrdonapps.weightreductor.backend.routing.auth
 import com.spyrdonapps.weightreductor.backend.routing.weighings
-import com.spyrdonapps.weightreductor.backend.util.utils.AppRunMode
+import com.spyrdonapps.weightreductor.backend.util.utils.*
 import com.viartemev.ktor.flyway.FlywayFeature
 import io.ktor.application.*
 import io.ktor.auth.*
+import io.ktor.auth.jwt.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.locations.*
@@ -69,8 +72,13 @@ fun Application.appModule(appRunMode: AppRunMode) {
     }
     install(StatusPages) {
         exception<Throwable> { cause ->
-            log.error("Internal error", cause)
-            call.respond(HttpStatusCode.InternalServerError, cause.toString())
+            if (cause is HttpStatusException) {
+                log.error("${cause.httpStatusCode} ${cause.message}")
+                call.respond(cause.httpStatusCode, cause.message)
+            } else {
+                log.error("Internal error: ${cause.stackTraceToString()}")
+                call.respond(HttpStatusCode.InternalServerError, cause.message.orEmpty())
+            }
         }
     }
 
@@ -81,17 +89,6 @@ fun Application.appModule(appRunMode: AppRunMode) {
         locations = arrayOf("classpath:db/migration")
     }
 
-    install(Authentication) {
-        basic(BASIC_AUTH_KEY) {
-            validate { credentials ->
-                if (credentials.name == "admin" && credentials.password == "admin") {
-                    return@validate UserIdPrincipal("admin")
-                } else {
-                    null
-                }
-            }
-        }
-    }
     install(CORS) {
         method(HttpMethod.Options)
         method(HttpMethod.Get)
@@ -107,23 +104,29 @@ fun Application.appModule(appRunMode: AppRunMode) {
         header(HttpHeaders.Authorization)
         anyHost()
     }
+    install(Authentication) {
+        jwt {
+            verifier(JWTUtils.verifier)
+            validate { credentials ->
+                val tokenType = JWTUtils.getTokenType(credentials.payload)
+                when (tokenType) {
+                    TokenType.Access -> JWTPrincipal(credentials.payload)
+                    TokenType.Refresh -> httpStatusException(HttpStatusCode.Forbidden, "Wrong token type")
+                }.exhaustive
+            }
+        }
+    }
 
     val weighingsRepository: WeighingsRepository by inject()
     val usersRepository: UsersRepository by inject()
+    val requestValidator: RequestValidator by inject()
 
     routing {
         get("/") {
             call.respond("API alive")
         }
-        authenticate(BASIC_AUTH_KEY) {
-            get("/login") {
-                val user =
-                    call.authentication.principal as? UserIdPrincipal ?: error("No principal")
-                call.respond("Now you are logged in, ${user.name}")
-            }
-        }
         weighings(weighingsRepository)
-        auth(usersRepository)
+        auth(usersRepository, requestValidator)
     }
 
     if (!DatabaseSettings.hasJdbcUrlSet) {

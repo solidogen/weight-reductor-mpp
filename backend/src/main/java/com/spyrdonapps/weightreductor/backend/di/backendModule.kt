@@ -10,6 +10,7 @@ import com.spyrdonapps.weightreductor.backend.repository.UsersRepository
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
 import com.spyrdonapps.weightreductor.backend.util.utils.BCryptPasswordHasher
 import com.spyrdonapps.weightreductor.backend.util.utils.PasswordHasher
+import com.spyrdonapps.weightreductor.backend.util.utils.RequestValidator
 import org.koin.dsl.module
 
 val backendModule = module(createdAtStart = true) {
@@ -30,5 +31,8 @@ val backendModule = module(createdAtStart = true) {
     }
     single {
         UsersRepository(usersDataSource = get())
+    }
+    single {
+        RequestValidator()
     }
 }

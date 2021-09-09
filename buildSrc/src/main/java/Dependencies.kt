@@ -27,7 +27,7 @@ object Versions {
     const val junit = "4.13.2"
     const val testRunner = "1.3.0"
 
-    const val datetime = "0.1.1"
+    const val datetime = "0.2.1"
 }
 
 object AndroidSdk {
@@ -76,6 +76,7 @@ object Koin {
 object Ktor {
     const val clientCore = "io.ktor:ktor-client-core:${Versions.ktor}"
     const val clientJson = "io.ktor:ktor-client-json:${Versions.ktor}"
+    const val clientAuth = "io.ktor:ktor-client-auth:${Versions.ktor}"
     const val clientLogging = "io.ktor:ktor-client-logging:${Versions.ktor}"
     const val clientSerialization = "io.ktor:ktor-client-serialization:${Versions.ktor}"
 

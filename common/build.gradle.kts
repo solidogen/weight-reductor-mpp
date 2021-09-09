@@ -77,6 +77,7 @@ kotlin {
                 // Ktor
                 implementation(Ktor.clientCore)
                 implementation(Ktor.clientJson)
+                implementation(Ktor.clientAuth)
                 implementation(Ktor.clientLogging)
                 implementation(Ktor.clientSerialization)
 

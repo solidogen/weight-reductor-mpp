@@ -1,5 +1,6 @@
 package com.spyrdonapps.weightreductor.android.ui.custom
 
+import android.util.Log
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
@@ -50,6 +51,12 @@ fun AppNavGraph(startDestination: String = AppDestinations.ONBOARDING_ROUTE) {
             errorState?.getContentIfNotHandled()?.let {
                 scaffoldState.snackbarHostState.showSnackbar(message = it)
             }
+        }
+    }
+    val tokenDataState by viewModel.tokenDataLiveData.observeAsState()
+    if (tokenDataState != null) {
+        LaunchedEffect(key1 = tokenDataState) {
+            actions.goToHomeScreen.invoke()
         }
     }
     Scaffold(
