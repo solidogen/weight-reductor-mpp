@@ -29,14 +29,14 @@ object JWTUtils {
         val accessToken = JWT.create()
             .withSubject(userId.toString())
             .withExpiresAt(
-                (Clock.System.now() + Duration.minutes(ACCESS_TOKEN_VALIDITY_MINUTES)).let { Date.from(it.toJavaInstant()) }
+                Date.from((Clock.System.now() + Duration.minutes(ACCESS_TOKEN_VALIDITY_MINUTES)).toJavaInstant())
             )
             .withClaim(tokenTypeKey, TokenType.Access.name)
             .sign(algorithm)
         val refreshToken = JWT.create()
             .withSubject(userId.toString())
             .withExpiresAt(
-                (Clock.System.now() + Duration.minutes(REFRESH_TOKEN_VALIDITY_MINUTES)).let { Date.from(it.toJavaInstant()) }
+                Date.from((Clock.System.now() + Duration.minutes(REFRESH_TOKEN_VALIDITY_MINUTES)).toJavaInstant())
             )
             .withClaim(tokenTypeKey, TokenType.Refresh.name)
             .sign(algorithm)
@@ -49,7 +49,7 @@ object JWTUtils {
     fun getTokenType(payload: Payload): TokenType {
         val rawTokenType = payload.claims[tokenTypeKey]?.asString()
             ?: httpStatusException(HttpStatusCode.BadRequest, "No token type")
-        @Suppress("UnnecessaryVariable") // for debugging
+        @Suppress("UnnecessaryVariable") // for debugging breakpoint
         val tokenType = TokenType.valueOf(rawTokenType)
         return tokenType
     }
