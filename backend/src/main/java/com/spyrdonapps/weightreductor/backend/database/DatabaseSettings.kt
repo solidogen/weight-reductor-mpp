@@ -21,6 +21,9 @@ object DatabaseSettings : KoinComponent {
 
     val hasJdbcUrlSet = remoteJdbcUrl != null
 
+    var h2server: Server? = null
+        private set
+
     fun init(appRunMode: AppRunMode) {
         dataSource = createDataSource(appRunMode)
         database = Database.connect(dataSource)
@@ -36,7 +39,9 @@ object DatabaseSettings : KoinComponent {
                 // TODO read option from script variable and restore some of those
                 AppRunMode.Default -> {
                     // creating tcp server lets me connect to database through dbeaver. embedded h2 does not allow this, as db lives in our app process only.
-                    val h2server = Server.createTcpServer("-tcpPort", "9100", "-ifNotExists").start()
+                    val h2server = Server.createTcpServer("-tcpPort", "9100", "-ifNotExists").start().also {
+                        h2server = it
+                    }
                     "jdbc:h2:${h2server.url}/mem:test"
                 } // "jdbc:postgresql:weightreductor?user=postgres"
                 AppRunMode.UnitTesting -> "jdbc:h2:mem:test" // "jdbc:postgresql:weightreductorunittests?user=postgres"

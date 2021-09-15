@@ -2,8 +2,7 @@
 
 package com.spyrdonapps.weightreductor.backend
 
-import com.auth0.jwt.JWT
-import com.auth0.jwt.algorithms.Algorithm
+import co.touchlab.kermit.Kermit
 import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.common.model.*
 import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
@@ -20,13 +19,14 @@ import io.ktor.auth.jwt.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.locations.*
-import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import kotlinx.coroutines.GlobalScope
+import io.ktor.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -35,6 +35,16 @@ import org.koin.ktor.ext.Koin
 import org.koin.ktor.ext.inject
 import org.koin.logger.SLF4JLogger
 import org.slf4j.event.Level
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+
+lateinit var kermit: Kermit
+    private set
+
+lateinit var server: NettyApplicationEngine
+    private set
 
 fun main() {
     embeddedServer(
@@ -44,9 +54,17 @@ fun main() {
             appModule(AppRunMode.Default)
         },
         watchPaths = listOf("com.spyrdonapps.weightreductor.backend") // todo - this doesn't recompile BE
-    ).start(wait = true)
+    ).also {
+        server = it
+    }.start(wait = true).also {
+        it.addShutdownHook {
+            kermit.w { "SERVER SHUTDOWN" }
+            DatabaseSettings.h2server?.stop()
+        }
+    }
 }
 
+@OptIn(KtorExperimentalAPI::class)
 fun Application.appModule(appRunMode: AppRunMode) {
     install(DefaultHeaders)
     install(Locations)
@@ -66,6 +84,7 @@ fun Application.appModule(appRunMode: AppRunMode) {
         install(Koin) {
             modules(backendModule)
             SLF4JLogger()
+            kermit = koin.get()
         }
     }
     install(StatusPages) {
@@ -118,6 +137,7 @@ fun Application.appModule(appRunMode: AppRunMode) {
     val weighingsRepository: WeighingsRepository by inject()
     val usersRepository: UsersRepository by inject()
     val requestValidator: RequestValidator by inject()
+    val globalScope: CoroutineScope by inject()
 
     routing {
         fun allRoutes(root: Route): List<Route> {
@@ -137,8 +157,37 @@ fun Application.appModule(appRunMode: AppRunMode) {
     }
 
     if (!DatabaseSettings.hasJdbcUrlSet) {
-        GlobalScope.launch {
+        globalScope.launch {
             weighingsRepository.upsert(Weighing(85f, LocalDate.parse("2020-02-02").atStartOfDayIn(TimeZone.UTC)))
         }
+    }
+
+    keepServerFromSleeping(globalScope)
+}
+
+@OptIn(ExperimentalTime::class)
+private fun keepServerFromSleeping(globalScope: CoroutineScope) {
+    globalScope.launch {
+        while (true) {
+            delay(Duration.minutes((12..14).random()))
+            val connector = server.environment.connectors.first()
+            val httpUrl = "http://${connector.host}:${connector.port}"
+            getUrl(httpUrl)
+            val httpsUrl = "https://${connector.host}:${connector.port}"
+            getUrl(httpsUrl)
+        }
+    }
+}
+
+private fun getUrl(rawUrl: String) {
+    try {
+        val url = URL(rawUrl)
+        val connection = url.openConnection() as HttpURLConnection
+        connection.requestMethod = "GET"
+        connection.doOutput = true
+        val responseCode = connection.responseCode
+        kermit.d { "Response code of $rawUrl: $responseCode" }
+    } catch (e: Exception) {
+        kermit.w { e.message.orEmpty() }
     }
 }
