@@ -52,9 +52,9 @@ android {
 kotlin {
     android()
     jvm()
-    js {
-        browser {
-        }
+    js(IR) {
+        useCommonJs()
+        browser()
     }
 
     targets.all {

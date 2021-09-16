@@ -2,8 +2,8 @@ object Versions {
     // todo move ALL versions from all modules here
     // todo ben manes plugin
 
-    const val kotlin = "1.5.21"
-    const val kotlinCoroutines = "1.5.1-native-mt"
+    const val kotlin = "1.5.30"
+    const val kotlinCoroutines = "1.5.2-native-mt"
     const val ktor = "1.6.2"
     const val kotlinxSerialization = "1.2.2"
     const val koin = "3.1.2"
@@ -18,10 +18,11 @@ object Versions {
     const val sqliteJdbcDriver = "3.30.1"
     const val slf4j = "1.7.30"
 
-    const val compose = "1.0.2"
-    const val wearCompose = "1.0.0-alpha03"
-    const val navCompose = "2.4.0-alpha06"
-    const val accompanist = "0.17.0"
+    const val compose = "1.1.0-alpha04"
+    const val wearCompose = "1.0.0-alpha06"
+    const val navCompose = "2.4.0-alpha09"
+    const val accompanist = "0.18.0"
+
     const val coil = "1.3.2"
 
     const val junit = "4.13.2"
