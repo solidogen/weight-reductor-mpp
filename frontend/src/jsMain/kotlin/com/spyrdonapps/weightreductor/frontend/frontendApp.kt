@@ -6,8 +6,12 @@ import com.spyrdonapps.common.model.Environment
 import com.spyrdonapps.common.clientType
 import com.spyrdonapps.common.repository.ClientRepository
 import com.spyrdonapps.weightreductor.JsBuildConfig
+import kotlinext.js.require
+import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 import org.jetbrains.compose.web.renderComposable
+
+fun String.varargClasses(): Array<String> = split(" ").toTypedArray()
 
 fun main() {
     val environment = Environment.fromRawEnvironment(JsBuildConfig.RAW_ENVIRONMENT)
@@ -15,8 +19,10 @@ fun main() {
     val koin = initKoin(environment = environment).koin
     val repository: ClientRepository = koin.get()
     val logger: Kermit = koin.get()
+    require("./styles.css")
     renderComposable(rootElementId = "root") {
-        Text("hello")
+        Div(attrs = { classes(*("bg-green-300 border-green-600 border-b p-4 m-4 rounded").varargClasses()) }) {
+            Text("hello")
+        }
     }
-    // todo check https://github.com/JetBrains/compose-jb/issues/738
 }
