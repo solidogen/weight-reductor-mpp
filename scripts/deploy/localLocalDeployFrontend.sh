@@ -3,6 +3,7 @@
 # Deploys frontend app to localhost which connects to local backend on localhost
 
 cd ../..
-echo 'raw_environment = Local' > environment.properties # CI uses setLocalEnvironment.sh script instead
+/bin/bash scripts/kill/killFrontendServerLinux.sh
+/bin/bash scripts/environment/setLocalEnvironment.sh
 ./gradlew frontend:jsBrowserDistribution
 ./gradlew frontend:jsBrowserDevelopmentRun

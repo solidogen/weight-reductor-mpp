@@ -27,15 +27,15 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: |
           cd scripts/environment
-          chmod +x setDevEnviroment.sh
-          bash setDevEnviroment.sh
+          chmod +x setDevenvironment.sh
+          bash setDevenvironment.sh
 
       - name: Set frontend Prod environment if master branch
         if: github.ref == 'refs/heads/master'
         run: |
           cd scripts/environment
-          chmod +x setProdEnviroment.sh
-          bash setProdEnviroment.sh
+          chmod +x setProdenvironment.sh
+          bash setProdenvironment.sh
 
       - name: Backend unit tests - schema validation
         run: ./gradlew backend:test

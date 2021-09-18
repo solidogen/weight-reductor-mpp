@@ -1,15 +1,6 @@
 #!/bin/bash
-fuser -n tcp -k 8080
-fuser -n tcp -k 8081
-fuser -n tcp -k 8082
-fuser -n tcp -k 8083
-fuser -n tcp -k 8084
-fuser -n tcp -k 8085
-fuser -n tcp -k 8086
-fuser -n tcp -k 8087
-fuser -n tcp -k 8088
-fuser -n tcp -k 8089
-
-fuser -n tcp -k 9090
-
-fuser -n tcp -k 9100
+cd ../..
+/bin/bash scripts/kill/killFrontendServerLinux.sh
+/bin/bash scripts/kill/killBackendServerLinux.sh
+/bin/bash scripts/kill/killH2ServerLinux.sh
+echo "all killed"

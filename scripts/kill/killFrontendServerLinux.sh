@@ -9,3 +9,4 @@ fuser -n tcp -k 8086
 fuser -n tcp -k 8087
 fuser -n tcp -k 8088
 fuser -n tcp -k 8089
+echo "frontend server killed"

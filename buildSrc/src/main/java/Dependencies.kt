@@ -38,8 +38,8 @@ object Versions {
 
 object AndroidSdk {
     const val min = 23
-    const val compile = 30
-    const val target = 30
+    const val compile = 31
+    const val target = 31
 }
 
 enum class RawEnvironment {
