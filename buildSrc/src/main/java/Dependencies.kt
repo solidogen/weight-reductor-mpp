@@ -29,6 +29,11 @@ object Versions {
     const val testRunner = "1.3.0"
 
     const val datetime = "0.2.1"
+
+    const val postcss = "8.3.5"
+    const val postcssLoader = "6.1.1"
+    const val autoprefixer = "10.3.1"
+    const val tailwind = "2.2.4"
 }
 
 object AndroidSdk {
