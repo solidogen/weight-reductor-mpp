@@ -65,8 +65,6 @@ fun isNonStable(version: String): Boolean {
     return isStable.not()
 }
 
-// todo new syntax like in backend build.gradle
-
 // Alias "installDist" as "stage" for Heroku, to prepare jar for Procfile access
 tasks.create("stage") {
     dependsOn(":backend:installDist")

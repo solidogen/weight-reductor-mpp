@@ -42,7 +42,7 @@ jobs:
 
       - name: Generate js files if develop or master branch
         if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'
-        run: ./gradlew frontend:browserDistribution
+        run: ./gradlew frontend:jsBrowserDistribution
 
       - name: Deploy js as Netlify Draft if develop branch
         uses: South-Paw/action-netlify-deploy@v1.2.0

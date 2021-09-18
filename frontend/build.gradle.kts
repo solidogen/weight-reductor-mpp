@@ -42,19 +42,6 @@ kotlin {
     }
 }
 
-// todo - remove this when kotlin can be bumped to 1.5.30 (blocked by jetpack compose)
-afterEvaluate {
-    rootProject.extensions.configure<NodeJsRootExtension> {
-        versions.webpackDevServer.version = "4.0.0"
-    }
-}
-
-compose.desktop {
-    application {
-        mainClass = ""
-    }
-}
-
 val copyTailwindConfig = tasks.register<Copy>("copyTailwindConfig") {
     from("./tailwind.config.js")
     into("${rootProject.buildDir}/js/packages/${rootProject.name}-${project.name}")

@@ -4,5 +4,5 @@
 
 cd ../..
 echo 'raw_environment = Dev' > environment.properties # CI uses setDevEnvironment.sh script instead
-./gradlew frontend:browserDistribution
-./gradlew frontend:run --continuous
+./gradlew frontend:jsBrowserDistribution
+./gradlew frontend:jsBrowserDevelopmentRun

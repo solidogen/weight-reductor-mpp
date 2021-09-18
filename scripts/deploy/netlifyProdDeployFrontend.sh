@@ -4,5 +4,5 @@
 
 cd ../..
 echo 'raw_environment = Prod' > environment.properties # CI uses setProdEnvironment.sh script instead
-./gradlew frontend:browserDistribution
+./gradlew frontend:jsBrowserDistribution
 netlify deploy --prod
