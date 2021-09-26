@@ -22,6 +22,7 @@ fun main() {
     val koin = initKoin(environment = environment).koin
     repository = koin.get()
     logger = koin.get()
+    logger.d { "Environment: $environment" }
     require("./styles.css")
     renderComposable(rootElementId = "root") {
         val isLoggedIn by repository.isLoggedInStateFlow.collectAsState()

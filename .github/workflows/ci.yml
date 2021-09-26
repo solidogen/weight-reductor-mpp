@@ -27,8 +27,8 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: |
           cd scripts/environment
-          chmod +x setDevenvironment.sh
-          bash setDevenvironment.sh
+          chmod +x setDevEnvironment.sh
+          bash setDevEnvironment.sh
 
       - name: Set frontend Prod environment if master branch
         if: github.ref == 'refs/heads/master'

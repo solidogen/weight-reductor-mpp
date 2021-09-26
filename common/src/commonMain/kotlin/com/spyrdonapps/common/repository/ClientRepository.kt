@@ -15,6 +15,7 @@ class ClientRepository(
     private val baseUrl = environment.baseUrl
     // todo use ApiResponse/ApiResult wrapper (flow usecase)
 
+    // todo load from cache? browser storage is sus, I should not put tokens there
     private var tokenDataStateFlow: MutableStateFlow<TokenData?> = MutableStateFlow(null)
     private var tokenData: TokenData?
         get() = tokenDataStateFlow.value
@@ -23,7 +24,7 @@ class ClientRepository(
     val isLoggedInStateFlow: StateFlow<Boolean> = tokenDataStateFlow.map { tokenData != null }.stateIn(
         scope = globalScope,
         started = SharingStarted.Eagerly,
-        initialValue = false // todo load from cache? multiplatform settings (but is it secure?)
+        initialValue = tokenData != null
     )
 
     suspend fun getAllWeighings(): List<Weighing> =

@@ -1,9 +1,6 @@
-import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
-
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose") version "1.0.0-alpha4-build348"
-//    kotlin("plugin.serialization") // TODO - is this needed here?
 }
 
 version = "1.0"
