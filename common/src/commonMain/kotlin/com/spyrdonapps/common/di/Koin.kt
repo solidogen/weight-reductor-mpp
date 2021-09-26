@@ -12,6 +12,7 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.http.*
+import kotlinx.coroutines.MainScope
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -35,8 +36,9 @@ fun commonModule(enableNetworkLogs: Boolean, environment: Environment) = module 
     single { environment }
     single { createJson() }
     single { Kermit(getLogger()) }
+    single { MainScope() }
     single { createHttpClient(json = get(), enableNetworkLogs = enableNetworkLogs, kermit = get()) }
-    single { ClientRepository(client = get(), environment = get()) }
+    single { ClientRepository(client = get(), environment = get(), globalScope = get()) }
 }
 
 fun createJson() = Json { isLenient = true; ignoreUnknownKeys = true }

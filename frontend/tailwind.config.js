@@ -15,6 +15,9 @@ module.exports = {
         extend: {
             padding: ['first', 'last'],
             margin: ['first', 'last'],
+            backgroundColor: ['disabled', 'active'],
+            textColor: ['disabled', 'active'],
+            opacity: ['disabled'],
         },
     },
     plugins: [],

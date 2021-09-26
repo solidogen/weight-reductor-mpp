@@ -6,4 +6,4 @@ cd ../..
 /bin/bash scripts/kill/killFrontendServerLinux.sh
 /bin/bash scripts/environment/setDevEnvironment.sh
 ./gradlew frontend:jsBrowserDistribution
-./gradlew frontend:jsBrowserDevelopmentRun
+./gradlew frontend:jsBrowserDevelopmentRun --continuous

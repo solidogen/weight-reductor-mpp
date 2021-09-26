@@ -4,15 +4,27 @@ import com.spyrdonapps.common.model.*
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.*
 
 class ClientRepository(
     private val client: HttpClient,
-    private val environment: Environment
+    private val environment: Environment,
+    private val globalScope: CoroutineScope
 ) {
     private val baseUrl = environment.baseUrl
     // todo use ApiResponse/ApiResult wrapper (flow usecase)
 
-    private var tokenData: TokenData? = null
+    private var tokenDataStateFlow: MutableStateFlow<TokenData?> = MutableStateFlow(null)
+    private var tokenData: TokenData?
+        get() = tokenDataStateFlow.value
+        set(value) { tokenDataStateFlow.value = value }
+
+    val isLoggedInStateFlow: StateFlow<Boolean> = tokenDataStateFlow.map { tokenData != null }.stateIn(
+        scope = globalScope,
+        started = SharingStarted.Eagerly,
+        initialValue = false // todo load from cache? multiplatform settings (but is it secure?)
+    )
 
     suspend fun getAllWeighings(): List<Weighing> =
         client.get("$baseUrl${ApiEndpoints.weighings}")
