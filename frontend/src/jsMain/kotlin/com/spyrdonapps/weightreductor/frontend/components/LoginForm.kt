@@ -15,14 +15,14 @@ fun LoginForm() {
         Div(attrs = { tailwindClasses("mb-4") }) {
             Label(
                 forId = usernameLabelId,
-                attrs = { tailwindClasses("block text-grey-darker text-sm font-bold mb-2") }
+                attrs = { tailwindClasses("block text-gray-600 text-sm font-bold mb-2") }
             ) {
                 Text("Username")
             }
             Input(
                 type = InputType.Text,
                 attrs = {
-                    tailwindClasses("shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker")
+                    tailwindClasses("shadow appearance-none border rounded w-full py-2 px-3 text-gray-600")
                     id(usernameLabelId)
                     placeholder("Username")
                 }
@@ -31,7 +31,7 @@ fun LoginForm() {
         Div(attrs = { tailwindClasses("mb-6") }) {
             Label(
                 forId = passwordLabelId,
-                attrs = { tailwindClasses("block text-grey-darker text-sm font-bold mb-2") }
+                attrs = { tailwindClasses("block text-gray-600 text-sm font-bold mb-2") }
             // todo - red border class if empty f.e. for testing. extract btw and hoist state
             ) {
                 Text("Password")
@@ -39,18 +39,17 @@ fun LoginForm() {
             Input(
                 type = InputType.Password,
                 attrs = {
-                    tailwindClasses("shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3")
+                    tailwindClasses("shadow appearance-none border border-red rounded w-full py-2 px-3 text-gray-600 mb-3")
                     id(passwordLabelId)
                     placeholder("**********")
                 }
             )
-            P(attrs = { tailwindClasses("text-red text-xs italic") }) {
+            P(attrs = { tailwindClasses("text-red-600 text-xs italic") }) {
                 Text("Please choose a password")
             }
         }
         // todo finish https://tailwindcomponents.com/component/login-form
         //  todo extract composable
-        //  todo fix colors
     }
 }
 
@@ -59,14 +58,14 @@ fun LoginForm() {
 //    Div(attrs = { tailwindClasses(containerTailwindClasses) }) {
 //        Label(
 //            forId = forId,
-//            attrs = { tailwindClasses("block text-grey-darker text-sm font-bold mb-2") }
+//            attrs = { tailwindClasses("block text-gray-600 text-sm font-bold mb-2") }
 //        ) {
 //            Text("Username")
 //        }
 //        Input(
 //            type = InputType.Text,
 //            attrs = {
-//                tailwindClasses("shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"),
+//                tailwindClasses("shadow appearance-none border rounded w-full py-2 px-3 text-gray-600"),
 //                id(usernameLabelId)
 //                placeholder("Username")
 //            }
