@@ -3,60 +3,69 @@ import java.util.Properties
 import java.io.FileWriter
 
 plugins {
-    kotlin("jvm") // todo multiplatform + jvmMain
+    kotlin("multiplatform")
     application
     kotlin("plugin.serialization")
 }
 
-dependencies {
-    // todo - this imports only androidMain in IDE, rest is considered errors (although gradle build works fine)
-    implementation(project(":common"))
+val ciVariablesPath = "build/generated/source/ci"
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}")
+kotlin {
+    jvm {
+        withJava()
+    }
 
-    implementation(Deps.datetime)
+    sourceSets {
+        val jvmMain by getting {
+            kotlin.srcDir(ciVariablesPath)
+            dependencies {
+                // todo - this imports only androidMain in IDE, rest is considered errors (although gradle build works fine)
+                implementation(project(":common"))
 
-    implementation("io.ktor:ktor-server-core:${Versions.ktor}")
-    implementation("io.ktor:ktor-server-netty:${Versions.ktor}")
-    implementation("io.ktor:ktor-serialization:${Versions.ktor}")
-    implementation("io.ktor:ktor-auth:${Versions.ktor}")
-    implementation("io.ktor:ktor-auth-jwt:${Versions.ktor}")
-    implementation("io.ktor:ktor-locations:${Versions.ktor}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}")
 
-    implementation(Koin.ktor)
-    implementation(Koin.slf4j)
+                implementation(Deps.datetime)
 
-    implementation("ch.qos.logback:logback-classic:1.2.3")
+                implementation("io.ktor:ktor-server-core:${Versions.ktor}")
+                implementation("io.ktor:ktor-server-netty:${Versions.ktor}")
+                implementation("io.ktor:ktor-serialization:${Versions.ktor}")
+                implementation("io.ktor:ktor-auth:${Versions.ktor}")
+                implementation("io.ktor:ktor-auth-jwt:${Versions.ktor}")
+                implementation("io.ktor:ktor-locations:${Versions.ktor}")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerialization}") // JVM dependency
-    implementation("io.ktor:ktor-websockets:${Versions.ktor}")
+                implementation(Koin.ktor)
+                implementation(Koin.slf4j)
 
-    implementation("org.postgresql:postgresql:${Versions.postgres}")
-    implementation("com.zaxxer:HikariCP:4.0.2")
-    implementation ("com.h2database:h2:1.4.200")
-    implementation("org.flywaydb:flyway-core:7.5.3")
-    implementation("com.viartemev:ktor-flyway-feature:1.3.0")
-    implementation("at.favre.lib:bcrypt:0.9.0")
-    implementation("com.auth0:java-jwt:3.18.1")
+                implementation("ch.qos.logback:logback-classic:1.2.3")
 
-    implementation("org.jetbrains.exposed:exposed-core:${Versions.exposed}")
-    implementation("org.jetbrains.exposed:exposed-dao:${Versions.exposed}")
-    implementation("org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}")
-    implementation("org.jetbrains.exposed:exposed-java-time:${Versions.exposed}")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerialization}") // JVM dependency
+                implementation("io.ktor:ktor-websockets:${Versions.ktor}")
 
-    testImplementation(Koin.test)
-    testImplementation("io.ktor:ktor-server-test-host:${Versions.ktor}")
+                implementation("org.postgresql:postgresql:${Versions.postgres}")
+                implementation("com.zaxxer:HikariCP:4.0.2")
+                implementation ("com.h2database:h2:1.4.200")
+                implementation("org.flywaydb:flyway-core:7.5.3")
+                implementation("com.viartemev:ktor-flyway-feature:1.3.0")
+                implementation("at.favre.lib:bcrypt:0.9.0")
+                implementation("com.auth0:java-jwt:3.18.1")
+
+                implementation("org.jetbrains.exposed:exposed-core:${Versions.exposed}")
+                implementation("org.jetbrains.exposed:exposed-dao:${Versions.exposed}")
+                implementation("org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}")
+                implementation("org.jetbrains.exposed:exposed-java-time:${Versions.exposed}")
+
+                // todo jvmTest
+//                testImplementation(Koin.test)
+//                testImplementation("io.ktor:ktor-server-test-host:${Versions.ktor}")
+            }
+        }
+    }
 }
 
 application {
     mainClass.set("com.spyrdonapps.weightreductor.backend.BackendAppKt")
 }
 
-val ciVariablesPath = "build/generated/source/ci"
-
-kotlin {
-    sourceSets["main"].kotlin.srcDir(ciVariablesPath)
-}
 
 tasks {
     withType<KotlinCompile> {
@@ -95,8 +104,9 @@ tasks {
             }
         }
     }
-    val compileKotlin by existing
-    compileKotlin {
-        dependsOn(generateCiVariables)
-    }
+    // todo find equivalent in multiplatform
+//    val compileKotlin by existing
+//    compileKotlin {
+//        dependsOn(generateCiVariables)
+//    }
 }
