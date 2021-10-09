@@ -104,9 +104,8 @@ tasks {
             }
         }
     }
-    // todo find equivalent in multiplatform
-//    val compileKotlin by existing
-//    compileKotlin {
-//        dependsOn(generateCiVariables)
-//    }
+    val compileKotlinJvm by existing
+    compileKotlinJvm {
+        dependsOn(generateCiVariables)
+    }
 }

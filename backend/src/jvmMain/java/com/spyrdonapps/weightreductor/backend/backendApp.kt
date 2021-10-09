@@ -1,10 +1,7 @@
-@file:Suppress("UnusedImport")
-
 package com.spyrdonapps.weightreductor.backend
 
 import co.touchlab.kermit.Kermit
-import com.spyrdonapps.common.devonly.*
-import com.spyrdonapps.common.model.*
+import com.spyrdonapps.common.model.Weighing
 import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
 import com.spyrdonapps.weightreductor.backend.di.backendModule
 import com.spyrdonapps.weightreductor.backend.repository.UsersRepository
@@ -171,10 +168,9 @@ private fun keepServerFromSleeping(globalScope: CoroutineScope) {
         while (true) {
             delay(Duration.minutes((12..14).random()))
             val connector = server.environment.connectors.first()
-            val httpUrl = "http://${connector.host}:${connector.port}"
-            getUrl(httpUrl)
-            val httpsUrl = "https://${connector.host}:${connector.port}"
-            getUrl(httpsUrl)
+            val protocol = connector.type.name.lowercase()
+            val thisServerUrl = "$protocol://${connector.host}:${connector.port}"
+            getUrl(thisServerUrl)
         }
     }
 }

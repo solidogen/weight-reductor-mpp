@@ -1,9 +1,6 @@
-@file:Suppress("UnusedImport")
-
 package com.spyrdonapps.weightreductor.backend.routing
 
 import com.spyrdonapps.common.model.*
-import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository
 import io.ktor.application.*
 import io.ktor.auth.*

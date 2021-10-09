@@ -1,4 +1,3 @@
-@file:Suppress("UnusedImport")
 
 package schema
 
@@ -6,7 +5,6 @@ import com.spyrdonapps.weightreductor.backend.CiVariables
 import com.spyrdonapps.weightreductor.backend.appModule
 import com.spyrdonapps.weightreductor.backend.database.DatabaseSettings
 import com.spyrdonapps.common.model.*
-import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.weightreductor.backend.di.backendModule
 import com.spyrdonapps.weightreductor.backend.repository.UsersRepository
 import com.spyrdonapps.weightreductor.backend.repository.WeighingsRepository

@@ -1,14 +1,10 @@
-@file:Suppress("UnusedImport")
-
 package com.spyrdonapps.weightreductor.backend.util.utils
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.Payload
-import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.common.model.*
-import io.ktor.auth.jwt.*
 import io.ktor.http.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
