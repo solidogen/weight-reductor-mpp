@@ -19,7 +19,6 @@ kotlin {
         val jvmMain by getting {
             kotlin.srcDir(ciVariablesPath)
             dependencies {
-                // todo - this imports only androidMain in IDE, rest is considered errors (although gradle build works fine)
                 implementation(project(":common"))
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}")
@@ -43,7 +42,7 @@ kotlin {
 
                 implementation("org.postgresql:postgresql:${Versions.postgres}")
                 implementation("com.zaxxer:HikariCP:4.0.2")
-                implementation ("com.h2database:h2:1.4.200")
+                implementation("com.h2database:h2:1.4.200")
                 implementation("org.flywaydb:flyway-core:7.5.3")
                 implementation("com.viartemev:ktor-flyway-feature:1.3.0")
                 implementation("at.favre.lib:bcrypt:0.9.0")
@@ -53,10 +52,13 @@ kotlin {
                 implementation("org.jetbrains.exposed:exposed-dao:${Versions.exposed}")
                 implementation("org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}")
                 implementation("org.jetbrains.exposed:exposed-java-time:${Versions.exposed}")
+            }
+        }
 
-                // todo jvmTest
-//                testImplementation(Koin.test)
-//                testImplementation("io.ktor:ktor-server-test-host:${Versions.ktor}")
+        val jvmTest by getting {
+            dependencies {
+                implementation(Koin.test)
+                implementation("io.ktor:ktor-server-test-host:${Versions.ktor}")
             }
         }
     }

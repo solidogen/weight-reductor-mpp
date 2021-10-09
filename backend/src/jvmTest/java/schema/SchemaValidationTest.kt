@@ -1,4 +1,3 @@
-
 package schema
 
 import com.spyrdonapps.weightreductor.backend.CiVariables
