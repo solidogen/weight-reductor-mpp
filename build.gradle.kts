@@ -13,7 +13,6 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        // todo gradle doctor
         classpath("com.android.tools.build:gradle:7.0.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")

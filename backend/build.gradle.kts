@@ -3,7 +3,7 @@ import java.util.Properties
 import java.io.FileWriter
 
 plugins {
-    kotlin("jvm")
+    kotlin("jvm") // todo multiplatform + jvmMain
     application
     kotlin("plugin.serialization")
 }
