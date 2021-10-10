@@ -71,6 +71,10 @@ class ClientRepository(
         }
     }
 
+    fun logout() {
+        tokenData = null
+    }
+
     private fun HttpRequestBuilder.addBearerHeader(tokenData: TokenData?) {
         header("Authorization", "Bearer ${tokenData?.accessToken.orEmpty()}")
     }

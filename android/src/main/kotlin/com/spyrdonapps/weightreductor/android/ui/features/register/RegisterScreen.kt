@@ -14,11 +14,12 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import com.spyrdonapps.common.model.UserCredentials
+import com.spyrdonapps.common.util.utils.Action
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RegisterScreen(
-    goToLoginScreen: () -> Unit,
+    goToLoginScreen: Action,
     registerRequested: (UserCredentials) -> Unit
 ) {
     Box(

@@ -2,7 +2,7 @@ package com.spyrdonapps.weightreductor.frontend.components
 
 import androidx.compose.runtime.*
 import com.spyrdonapps.common.model.UserCredentials
-import com.spyrdonapps.weightreductor.frontend.utils.setEnabled
+import com.spyrdonapps.weightreductor.frontend.utils.DivTw
 import com.spyrdonapps.weightreductor.frontend.utils.tailwindClasses
 import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
@@ -18,8 +18,8 @@ fun LoginForm(onLoginButtonClick: (UserCredentials) -> Unit) {
     val isPasswordValid = password.isNotBlank()
     val isLoginButtonEnabled = isUsernameValid && isPasswordValid
 
-    Div(attrs = { tailwindClasses("bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col") }) {
-        Div(attrs = { tailwindClasses("mb-4") }) {
+    DivTw("bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col") {
+        DivTw("mb-4") {
             Label(
                 forId = usernameLabelId,
                 attrs = { tailwindClasses("block text-gray-600 text-sm font-bold mb-2") }
@@ -40,7 +40,7 @@ fun LoginForm(onLoginButtonClick: (UserCredentials) -> Unit) {
                 }
             )
         }
-        Div(attrs = { tailwindClasses("mb-6") }) {
+        DivTw("mb-6") {
             Label(
                 forId = passwordLabelId,
                 attrs = { tailwindClasses("block text-gray-600 text-sm font-bold mb-2") }
@@ -66,7 +66,7 @@ fun LoginForm(onLoginButtonClick: (UserCredentials) -> Unit) {
                 }
             }
         }
-        Div(attrs = { tailwindClasses("flex items-center justify-between") }) {
+        DivTw("flex items-center justify-between") {
             AppButton(
                 text = "Login",
                 isEnabled = isLoginButtonEnabled,
@@ -79,21 +79,9 @@ fun LoginForm(onLoginButtonClick: (UserCredentials) -> Unit) {
     }
 }
 
-@Composable
-fun AppButton(text: String, isEnabled: Boolean, onClick: () -> Unit) {
-    Button(attrs = {
-        tailwindClasses("bg-blue-600 hover:bg-blue-900 active:bg-blue-300 disabled:bg-gray-200 text-white disabled:text-gray-500 font-bold py-2 px-4 rounded")
-        type(ButtonType.Button)
-        onClick { onClick.invoke() }
-        setEnabled(isEnabled)
-    }) {
-        Text(text)
-    }
-}
-
 //@Composable
 //fun InputLabel(forId: String, placeholder: String, text: String, containerTailwindClasses: String, inputType) {
-//    Div(attrs = { tailwindClasses(containerTailwindClasses) }) {
+//    Div(attrs = { tailwindClasses(containerTailwindClasses) }) { // todo - DivTw or delete this at all
 //        Label(
 //            forId = forId,
 //            attrs = { tailwindClasses("block text-gray-600 text-sm font-bold mb-2") }

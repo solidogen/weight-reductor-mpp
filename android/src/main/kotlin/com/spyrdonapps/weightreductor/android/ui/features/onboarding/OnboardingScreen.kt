@@ -7,15 +7,16 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.spyrdonapps.common.util.utils.Action
 
 @Composable
 fun OnboardingScreen(
-    goToLoginScreen: () -> Unit
+    goToLoginScreen: Action
 ) {
     Scaffold {
         Column(modifier = Modifier.fillMaxSize()) {
             Text(text = "App is this and that")
-            Button(onClick = goToLoginScreen) {
+            Button(onClick = goToLoginScreen::invoke) {
                 Text(text = "Go To Login")
             }
         }
