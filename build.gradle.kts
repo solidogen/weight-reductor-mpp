@@ -16,7 +16,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:7.0.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
-        classpath("com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}")
+        classpath("com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}") // unused atm
         classpath("com.google.gms:google-services:4.3.10")
         classpath("com.google.firebase:firebase-crashlytics-gradle:2.7.1")
         classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.7.0")
@@ -37,6 +37,17 @@ allprojects {
                 jvmTarget = "1.8"
             }
         }
+    }
+}
+
+subprojects {
+    afterEvaluate {
+        project.extensions.findByType<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension>()
+            ?.let { extension ->
+                extension.sourceSets.removeAll { sourceSet ->
+                    setOf("androidAndroidTestRelease").contains(sourceSet.name)
+                }
+            }
     }
 }
 
