@@ -37,7 +37,7 @@ kotlin {
 
                 implementation("ch.qos.logback:logback-classic:1.2.3")
 
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerialization}") // JVM dependency
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerialization}")
                 implementation("io.ktor:ktor-websockets:${Versions.ktor}")
 
                 implementation("org.postgresql:postgresql:${Versions.postgres}")
