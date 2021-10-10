@@ -111,7 +111,7 @@ dependencies {
 
     implementation(Deps.datetime)
 
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.6")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
 
     testImplementation(Test.junit)
     androidTestImplementation("androidx.test:runner:${Versions.testRunner}")
