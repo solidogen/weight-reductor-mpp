@@ -1,5 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.osacky.doctor.DoctorExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("com.github.ben-manes.versions") version "0.39.0" // run scripts/checkForDependencyUpdates.sh to list all available updates
@@ -32,17 +34,19 @@ allprojects {
     }
 
     tasks {
-        withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        withType<KotlinCompile> {
             kotlinOptions {
                 jvmTarget = "1.8"
+                freeCompilerArgs = freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
             }
         }
     }
 }
 
+// gets rid of warning about unused source set
 subprojects {
     afterEvaluate {
-        project.extensions.findByType<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension>()
+        project.extensions.findByType<KotlinMultiplatformExtension>()
             ?.let { extension ->
                 extension.sourceSets.removeAll { sourceSet ->
                     setOf("androidAndroidTestRelease").contains(sourceSet.name)

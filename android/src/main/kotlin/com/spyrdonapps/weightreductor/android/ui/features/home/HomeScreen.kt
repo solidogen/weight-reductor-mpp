@@ -11,9 +11,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.spyrdonapps.common.util.utils.Action
 import com.spyrdonapps.weightreductor.R
 import com.spyrdonapps.weightreductor.android.ui.custom.DefaultBottomBar
-import com.spyrdonapps.weightreductor.android.ui.features.main.MainViewModel
 import com.spyrdonapps.weightreductor.android.ui.features.meals.MealsScreen
 import com.spyrdonapps.weightreductor.android.ui.features.products.ProductsScreen
 import com.spyrdonapps.weightreductor.android.ui.features.profile.ProfileScreen
@@ -21,7 +21,7 @@ import com.spyrdonapps.weightreductor.android.ui.features.weighings.WeighingsScr
 import com.spyrdonapps.common.util.utils.exhaustive
 
 @Composable
-fun HomeScreen(goToSettings: () -> Unit) {
+fun HomeScreen(goToSettings: Action) {
     val (currentTab, setCurrentTab) = rememberSaveable {
         mutableStateOf(HomeTab.Meals)
     }

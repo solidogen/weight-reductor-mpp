@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.Properties
 import java.io.FileWriter
 
@@ -68,13 +67,7 @@ application {
     mainClass.set("com.spyrdonapps.weightreductor.backend.BackendAppKt")
 }
 
-
 tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
-        }
-    }
     val generateCiVariables by registering {
         val isCiBuildKey = "IS_CI_BUILD"
         group = "codegen"

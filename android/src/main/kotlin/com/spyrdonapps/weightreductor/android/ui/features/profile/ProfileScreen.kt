@@ -5,6 +5,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.spyrdonapps.common.util.utils.Action
 import com.spyrdonapps.weightreductor.android.ui.features.main.MainViewModel
 import org.koin.androidx.compose.getViewModel
 
@@ -12,7 +13,7 @@ import org.koin.androidx.compose.getViewModel
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     viewModel: MainViewModel = getViewModel(),
-    goToSettings: () -> Unit
+    goToSettings: Action
 ) {
     Box(modifier = modifier) {
         Button(onClick = goToSettings) {

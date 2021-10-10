@@ -1,10 +1,7 @@
 package com.spyrdonapps.weightreductor.android.ui.features.main
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import co.touchlab.kermit.Kermit
 import com.spyrdonapps.common.model.TokenData
 import com.spyrdonapps.common.model.UserCredentials
@@ -25,7 +22,7 @@ class MainViewModel(
 
     val weighingsLiveData: LiveData<List<Weighing>> get() = _weighingsLiveData
     val errorLiveData: LiveData<Event<String>> get() = _errorLiveData
-    val tokenDataLiveData: LiveData<TokenData?> get() = _tokenData
+    val isLoggedInLiveData: LiveData<Boolean> get() = repository.isLoggedInStateFlow.asLiveData()
 
     fun loginRequested(userCredentials: UserCredentials) {
         viewModelScope.launch {

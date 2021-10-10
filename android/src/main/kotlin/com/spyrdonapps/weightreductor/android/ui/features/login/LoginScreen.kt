@@ -15,11 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.spyrdonapps.common.model.UserCredentials
+import com.spyrdonapps.common.util.utils.Action
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
-    goToRegisterScreen: () -> Unit,
+    goToRegisterScreen: Action,
     loginRequested: (UserCredentials) -> Unit
 ) {
     Box(
