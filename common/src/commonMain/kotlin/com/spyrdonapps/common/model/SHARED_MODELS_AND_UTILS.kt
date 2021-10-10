@@ -12,14 +12,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-/**
- * This class is a special snowflake, because AGP bugs forbids backend module from seeing commonMain classes, it only sees androidMain for some reason.
- * It compiles and runs correctly though.
- *
- * I use typealiases in androidMain to point to real classes, so IDE can see those classes anyway.
- * I keep all shared classes here for convenience.
- * */
-
 object ApiEndpoints {
     const val login = "/api/auth/login"
     const val register = "/api/auth/register"

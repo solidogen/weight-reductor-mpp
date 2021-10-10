@@ -1,8 +1,5 @@
-@file:Suppress("UnusedImport")
-
 package com.spyrdonapps.weightreductor.backend.datasource
 
-import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.common.model.*
 import com.spyrdonapps.weightreductor.backend.database.tables.WeighingsTable
 import kotlinx.datetime.Instant
@@ -53,11 +50,11 @@ class ExposedWeighingsDataSource : WeighingsDataSource {
         newSuspendedTransaction {
             return@newSuspendedTransaction WeighingsTable.selectAll()
                 .filter { it[WeighingsTable.id].value == id }.map {
-                Weighing(
-                    weight = it[WeighingsTable.weight],
-                    date = it[WeighingsTable.date].toKotlinInstant()
-                )
-            }.first()
+                    Weighing(
+                        weight = it[WeighingsTable.weight],
+                        date = it[WeighingsTable.date].toKotlinInstant()
+                    )
+                }.first()
         }
 
     override suspend fun getByDate(date: Instant): Weighing =

@@ -2,10 +2,8 @@
 
 echo "Running git pre-commit hook"
 #echo $JAVA_HOME
-#pwd
-#source .bashrc
 
-#./gradlew backend:test     # TODO fix, gitkraken now doesn't resolve env variables and java_home is not found
+./gradlew backend:test
 
 RESULT=$?
 

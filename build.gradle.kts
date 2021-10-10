@@ -77,6 +77,6 @@ tasks {
         fileMode = 0b111101101
     }
     val installGitHook by existing
-    val dependedTask = getByPath(":backend:compileKotlin")
+    val dependedTask = getByPath(":backend:compileKotlinJvm")
     dependedTask.dependsOn(installGitHook)
 }

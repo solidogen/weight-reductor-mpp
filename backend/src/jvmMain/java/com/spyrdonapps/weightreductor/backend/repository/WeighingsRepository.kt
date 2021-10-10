@@ -1,8 +1,5 @@
-@file:Suppress("UnusedImport")
-
 package com.spyrdonapps.weightreductor.backend.repository
 
-import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.common.model.*
 import com.spyrdonapps.weightreductor.backend.datasource.WeighingsDataSource
 import kotlinx.datetime.Instant

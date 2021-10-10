@@ -1,16 +1,11 @@
-@file:Suppress("UnusedImport")
-
 package com.spyrdonapps.weightreductor.backend.datasource
 
-import at.favre.lib.crypto.bcrypt.BCrypt
-import com.spyrdonapps.common.devonly.*
 import com.spyrdonapps.common.model.*
 import com.spyrdonapps.weightreductor.backend.database.tables.UsersTable
 import com.spyrdonapps.weightreductor.backend.util.utils.PasswordHasher
 import com.spyrdonapps.weightreductor.backend.util.utils.UserId
 import com.spyrdonapps.weightreductor.backend.util.utils.httpStatusException
 import io.ktor.http.*
-import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
