@@ -74,7 +74,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 24.dp),
-                onClick = goToRegisterScreen
+                onClick = goToRegisterScreen::invoke
             ) {
                 Text(text = "Don't have the account?")
             }

@@ -16,7 +16,7 @@ fun ProfileScreen(
     goToSettings: Action
 ) {
     Box(modifier = modifier) {
-        Button(onClick = goToSettings) {
+        Button(onClick = goToSettings::invoke) {
             Text(text = "Go to Settings")
         }
     }
