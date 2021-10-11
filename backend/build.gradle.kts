@@ -67,6 +67,18 @@ application {
     mainClass.set("com.spyrdonapps.weightreductor.backend.BackendAppKt")
 }
 
+distributions {
+    main {
+        contents {
+            from("$buildDir/libs") {
+                exclude(project.name)
+                rename("${project.name}-jvm", project.name)
+                into("lib")
+            }
+        }
+    }
+}
+
 tasks {
     val generateCiVariables by registering {
         val isCiBuildKey = "IS_CI_BUILD"
